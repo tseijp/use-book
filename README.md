@@ -1,44 +1,96 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# use-amazon
+===================================== dev ======================================
 
-## Available Scripts
+* ref
+* [Amazon の商品画像を取得する](https://www.ipentec.com/document/internet-get-amazon-product-image)
+* [プログラミングTypeScript](https://www.amazon.co.jp/dp/4873119049)
 
-In the project directory, you can run:
+### Example
+url1 ... https://www.amazon.co.jp/...-Boris-Cherny/dp/4873119049/ref=sr_1_2?__mk_ja_JP=...child=1&keywords=typescript&qid=1592817611&sr=8-2
+url2 ... https://www.amazon.co.jp/dp/4873119049
+src1 ... http://images-jp.amazon.com/images/P/4873119049
+src2 ... http://images-na.ssl-images-amazon.com/images/P/4873119049
 
-### `npm start`
+### Image
+http://images-jp.amazon.com/images/P/{ASIN/ISBN}.{COUNTRY}.{IMAGE}
+https://images-na.ssl-images-amazon.com/images/P/{ASIN/ISBN}.{COUNTRY}.{IMAGE}
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+ISBN(-10||-13) : International Standard Book Number（国際標準図書番号）... (978-)4-87311-904-5
+ASIN(-10) : Amazon Standard Identification Number ...
+COUNTRY ... 09
+IMAGE ...
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+value    | mean     | w*h size | book size | notes  
+:-|:-|:-|:-|:-  
+THUMBZZZ | samnale  | 75×75   | 52×75    |  
+TZZZZZZZ | small    | 110×110 | 77×110   |  
+MZZZZZZZ | middle   | 160×160 | 112×160  |  
+LZZZZZZZ | large    | 500×500 | 349×500  | if h<500, return Full size image  
 
-### `npm test`
+================================================================================
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+__use-amazon__ is a hook that lets you get product info from url or book cover.
+<!--p align="middle">
+  <a href="https://codesandbox.io/s/draggable-list-fh8r8"><img src="https://i.imgur.com/qLKJod3.gif" width="400"/></a>
+  <a href="https://codesandbox.io/s/cards-fduch"><img src="https://i.imgur.com/H6nXQEq.gif" width="400"/></a>
+  <a href="https://codesandbox.io/s/action-sheet-zuwji"><img src="https://i.imgur.com/THKPrmR.gif" width="400"/></a>
+  <a href="https://codesandbox.io/s/infinite-slideshow-nigoy"><img src="https://i.imgur.com/cuOfqST.gif" width="400"/></a>
+  <a href="https://codesandbox.io/s/viewpager-v364z"><img src="https://i.imgur.com/iwZOfT9.gif" width="400"/></a>
+  <a href="https://codesandbox.io/s/rkgzi"><img src="https://i.imgur.com/Walt1Ip.gif" width="400"/></a>
+</p-->
 
-### `npm run build`
+<p align="middle"><i>The demos are real click them!</i></p>
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Agenda
+* Install via npm
+* Quick Started
+* Simple example
+* Available hooks
+* Fantastic Recipes
+* Performance pitfalls
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Install via npm
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm i @tsei/use-amazon
+```
+### Quick Started
+```bash
+git clone github.com/tseijp/use-amazon
+cd use-amazon
+npm i
+npm start
+```
 
-### `npm run eject`
+* open browser and visit [localhost:3000](http://localhost:3000/)
+* Now you can go to our [demo](https://tsei.jp/hook/), and try its usage.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Simple example
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<!--p align="middle">
+  <a href="https://codesandbox.io/s/react-use-gesture-simple-i5e0j"><img src="https://i.imgur.com/AMzsEi3.gif" width="400"/></a>
+</p-->
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```jsx
+import { useAmazon } from 'use-amazon'
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+function App() {
+    return
+}
+```
 
-## Learn More
+### Available hooks
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+React-use-gesture exports several hooks that can handle different gestures:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+| Hook         | Description                                |
+| ------------ | ------------------------------------------ |
+| `useAmazon`  | get amazon data from url                   |
+| `useCamera`  | get amazon data from camera                |
+
+
+### Fantastic Recipes
+TODO
+
+### Performance pitfalls
+TODO

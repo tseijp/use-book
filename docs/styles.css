@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  cursor: url('https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/Ad1_-cursor.png') 39 39, auto;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial,
+    sans-serif;
+  background: #000;
+}
+
+.action-btn {
+  position: fixed;
+  z-index: 100;
+  bottom: 80px;
+  right: 40px;
+  height: 48px;
+  width: 48px;
+  border-radius: 24px;
+  background: coral;
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn:after {
+  content: ' ';
+  display: block;
+  background: #fff;
+  height: 20%;
+  width: 20%;
+  border-radius: 50%;
+}
+
+.bg > img {
+  width: 100%;
+  margin: 0;
+  display: block;
+}
+
+.sheet {
+  z-index: 100;
+  position: fixed;
+  left: 2vw;
+  height: calc(100vh + 100px);
+  width: 96vw;
+  border-radius: 12px 12px 0px;
+  background: #fff;
+  touch-action: none;
+}
+
+.sheet > div {
+  height: 60px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  text-transform: capitalize;
+}

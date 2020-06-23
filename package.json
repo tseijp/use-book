@@ -1,25 +1,21 @@
 {
+  "main": "main.js",
+  "module": "module.es.js",
   "name": "use-amazon",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.47",
-    "@types/react": "^16.9.38",
-    "@types/react-dom": "^16.9.8",
+    "quagga": "^0.12.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
     "typescript": "^3.7.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject",
+    "start": "cross-env NODE_ENV=development BABEL_ENV=development react-app-rewired start",
+    "build": "cross-env NODE_ENV=production  BABEL_ENV=production  react-app-rewired build",
+    "compile": "cross-env NODE_ENV=production  BABEL_ENV=production  rollup -c config/rollup.config.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,5 +31,25 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^4.1.2",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.12.47",
+    "@types/react": "^16.9.38",
+    "@types/react-dom": "^16.9.8",
+    "cross-env": "^7.0.2",
+    "react-app-rewired": "^2.1.6",
+    "react-scripts": "3.4.1",
+    "react-spring": "^8.0.27",
+    "react-use-gesture": "^7.0.15",
+    "rollup": "^2.18.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0"
   }
 }
