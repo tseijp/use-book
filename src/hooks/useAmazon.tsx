@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef } from 'react'
 
 //const url = 'www.amazon.co.jp/dp/4873119049'
 
-export function useAmazon (urltext:string, props?:{}) {
+export function useAmazon (urltext='', props?:{}) {
     /*props*/
     const SIZE = 'LZZZZZZZ'
     const ISSSL = false
@@ -14,16 +14,15 @@ export function useAmazon (urltext:string, props?:{}) {
         const paths = url.pathname.split('/').filter(v=>v)
         const dpind = paths.map((v,i) => v==='dp'&&i ).find(v=>v) || 0
         const dpid = paths.find((_,i)=>i===dpind+1) || ''
-        const asin = dpid[0]==='B' ? paths.find((_,i)=>i===dpind+1) :''
+        const asin = ''//dpid[0]==='B' ? paths.find((_,i)=>i===dpind+1) :''
         const isbn = dpid[0]!=='B' ? paths.find((_,i)=>i===dpind+1) :''
         const name = dpind > 0 ? paths[0] : ''
         const ref  = paths.find(v=>v.match('ref='))?.split('ref=')[1] || ''
-        return {url:`${host}/dp/${asin}`, name, asin, ref, SIZE}
+        return {url:`${host}/dp/${asin}`, name, asin, isbn, ref, SIZE}
     }, [urltext])
     const img = useMemo(()=>{
-        const src = `http://${host}/images/P/${data.asin}.09.${SIZE}`
+        const src = `http://${host}/images/P/${data.isbn}.09.${SIZE}`
         const alt =  data.name
-        console.log(data);
         return {src, alt}
     }, [data])
     return {img}

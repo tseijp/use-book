@@ -1,4 +1,3 @@
-# use-amazon
 ===================================== dev ======================================
 
 * ref
@@ -29,17 +28,9 @@ LZZZZZZZ | large    | 500×500 | 349×500  | if h<500, return Full size image
 
 ================================================================================
 
-__use-amazon__ is a hook that lets you get product info from url or book cover.
-<!--p align="middle">
-  <a href="https://codesandbox.io/s/draggable-list-fh8r8"><img src="https://i.imgur.com/qLKJod3.gif" width="400"/></a>
-  <a href="https://codesandbox.io/s/cards-fduch"><img src="https://i.imgur.com/H6nXQEq.gif" width="400"/></a>
-  <a href="https://codesandbox.io/s/action-sheet-zuwji"><img src="https://i.imgur.com/THKPrmR.gif" width="400"/></a>
-  <a href="https://codesandbox.io/s/infinite-slideshow-nigoy"><img src="https://i.imgur.com/cuOfqST.gif" width="400"/></a>
-  <a href="https://codesandbox.io/s/viewpager-v364z"><img src="https://i.imgur.com/iwZOfT9.gif" width="400"/></a>
-  <a href="https://codesandbox.io/s/rkgzi"><img src="https://i.imgur.com/Walt1Ip.gif" width="400"/></a>
-</p-->
+# use-amazon
 
-<p align="middle"><i>The demos are real click them!</i></p>
+__use-amazon__ is a hook that lets you get product info from url or book cover.
 
 ### Agenda
 * Install via npm
@@ -50,10 +41,10 @@ __use-amazon__ is a hook that lets you get product info from url or book cover.
 * Performance pitfalls
 
 ### Install via npm
-
 ```bash
-npm i @tsei/use-amazon
+npm i use-amazon
 ```
+
 ### Quick Started
 ```bash
 git clone github.com/tseijp/use-amazon
@@ -67,26 +58,23 @@ npm start
 
 ### Simple example
 
-<!--p align="middle">
-  <a href="https://codesandbox.io/s/react-use-gesture-simple-i5e0j"><img src="https://i.imgur.com/AMzsEi3.gif" width="400"/></a>
-</p-->
-
-```jsx
+```js
+import React from 'react'
 import { useAmazon } from 'use-amazon'
 
 function App() {
-    return
+    const url = 'https://amazon.com/xxx/dp/yyy'
+    const book = useAmazon(url)
+    return <img {...book.img} />
 }
 ```
 
 ### Available hooks
-
-React-use-gesture exports several hooks that can handle different gestures:
+use-amazon exports several hooks that can handle
 
 | Hook         | Description                                |
 | ------------ | ------------------------------------------ |
 | `useAmazon`  | get amazon data from url                   |
-| `useCamera`  | get amazon data from camera                |
 
 
 ### Fantastic Recipes
