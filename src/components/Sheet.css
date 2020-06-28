@@ -26,7 +26,7 @@
   left: 2vw;
   height: calc(100vh + 100px);
   width: 96vw;
-  border-radius: 12px 12px 0px;
+  border-radius: 4em 4em 0px;
   background: #fff;
   touch-action: none;
 }

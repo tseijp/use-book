@@ -1,68 +1,34 @@
-import React, { Fragment, useCallback, useEffect, useState, useRef } from 'react'
+import React, { Fragment, useCallback, useState } from 'react'
 import ReactDOM from 'react-dom'
-import { useSpring, animated, config } from 'react-spring'
-import { useGesture } from 'react-use-gesture'
+//import { Spring } from 'react-spring/renderprops'
 import './styles.css'
 import { unregister } from './serviceWorker'
-import { useAmazon, Scanner, Sheet, Slider } from '../src'//'use-amazon'
+import { Scanner, Sheet, Slider } from '../src'//'use-amazon'
+import { Book, Button } from './components'
 
-type BookProps = {
-    url?:string,
-    onClick:any,
-}
-
-const Book = ({url='', onClick}:BookProps) => {
-    const book = useAmazon(url, {})
-    return (
-        <div style={{width:"auto", height:"100%", padding:"50px 50px"}} onClick={onClick}>
-            <img style={{width:"auto",height:"100%",pointerEvents:"none"}} {...book.img}/>
-            <span style={{position:"absolute",bottom:0,left:"2em",color:"white"}}> {book.img.src} </span>
-        </div>
-    )
-}
-type ButtonProps = {
-    height:number,
-    limit :number,
-    opened :boolean,
-    started:boolean,
-    onOpen :Function,
-    onClose:Function,
-}
-const Button = ({height,limit,opened,started,onOpen,onClose}:ButtonProps) => {
-    const draggingRef = useRef(false)
-    const [{ scale,x,y }, set] = useSpring(() => ({ scale:1, x:0, y:0 }))
-    //const start  =()=>set({y:10  , config:config.stiff })
-    const open  =()=>set({scale:1.5,x:-25,y:-25, config:config.stiff })
-    const start =()=>set({scale:1,x:0,y:+100, config:config.stiff })
-    const close =()=>set({scale:1,x:0,y:0, config:config.stiff })
-    const toggle=()=>{return (opened&&started)?(onClose(), close()):(onOpen(), open())}
-    const bind = useGesture({
-        onDrag: ({vxvy:[,vy],down,movement:[mx,my],cancel})=>{
-            if ((mx**2+my**2 > limit**2) && cancel) cancel()
-            set({ x:down?mx:0, y:down?my:0,config:config.stiff })
-        },
-        onClick:()=>toggle()
-    })
-    useEffect(()=>{started?start():close()}, [started])
-    const display= y.to(py=>(py<height?'flex':'none'))
-    return (
-        <animated.div className="action-btn" {...bind()} style={{display,scale,x,y}}>
-            +</animated.div>
-    )
-}
+//const items = [...Array(9)].map((_,i)=>4041013380+i)
+const items = [4041013380,4041002877,4041315220,4041067944,4041366054,4041245257]
+//const items = [4041013380,4041002872,4041315224,4041067949,4041366059,4041245255]
 
 const App = () => {
     console.log('Index Render');
-    const result = useRef('')//[result, setResult] = useState<string>('');
-    const [urls, setUrls] = useState<string[]>([...Array(1)].fill(`amazon.com/dp/4873119049`))
-    const [books, setBooks] = useState<string[]>([...Array(1)].fill(`amazon.com/dp/4873119049`))
+    const [urls, setUrls] = useState<string[]>([...Array(0)].fill(`amazon.com/dp/4873119049`))
+    const [book, setBook] = useState<string>('')
+    const [books, /*setBooks*/] = useState<string[]>([...items].map(v=>`amazon.com/dp/${v}`))
     const [opened, setOpened] = useState<boolean>(false); // sheet stil opened
     const [started, setStarted] = useState<boolean>(false); // quagga stil inited ?
+    const addURL = useCallback((code:string)=>{
+        if ( code.length!==10 && code.length!==13 ) return
+        const newURL = code.length===10?code:code.slice(3)
+        if ( urls.filter(url=>url===newURL).length ) return
+        setUrls(pre=>[newURL, ...pre])
+        console.log(urls)
+    }, [urls])
     const height = window.innerHeight - 60
     return (
         <Fragment>
-            <Button onOpen ={()=>(setOpened(true) ,setStarted(false))}
-                    onClose={()=>(setOpened(false),setStarted(false))}
+            <Button onOpen ={()=>{setOpened(true) ; setStarted(false)}}
+                    onClose={()=>{setOpened(false); setStarted(false)}}
                     height ={height} limit={200} opened={opened} started={started}/>
             <Sheet  height ={height} started={started}
                     onOpen ={()=>(!opened&&(setOpened(true), setUrls([])))}
@@ -71,7 +37,7 @@ const App = () => {
                 {opened &&
                     <Scanner
                         onStarted ={(bool:boolean)=>setStarted(bool)}
-                        onDetected={(r:string)=>setUrls(pre=>[r, ...pre])}/>
+                        onDetected={(code:string)=>addURL(code)}/>
                 }
                 {/*opened && urls.length &&
                     <Slider width={300} visible={4}>
@@ -82,18 +48,16 @@ const App = () => {
                     </Slider>
                 */}
             </Sheet>
-            {true &&
-                <Slider width={300} visible={4}>
-                    {(books?books instanceof Array?books:[books]:[]).map((url,i)=>
-                        <Book key={i} url={url} onClick={()=>console.log(url)}/>
-                    )}
-                </Slider>
-            }
+            <Slider width={350} visible={5} style={{height:"50%",bottom:0,left:0,}}>
+                {(books?books instanceof Array?books:[books]:[]).map((url,i)=>
+                    <Book key={i} url={url} onOpen={()=>setBook(url)}/>
+                )}
+            </Slider>
             {/*debug*/}
             <div style={{position:"fixed",top:0,left:0,fontSize:"2em"}}>
                 <span style={{color:"white"}}>
-                    <p>{`${opened?'':'no'} opened`}</p>
-                    <p>{`${started?'':'no'} started`}</p>
+                    <p>{book || 'please Drag Book'}</p>
+                    {book && <Book url={book} onOpen={()=>setBook('')}/>}
                 </span>
             </div>
         </Fragment>
