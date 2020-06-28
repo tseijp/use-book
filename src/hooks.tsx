@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 
 
 //const url = 'www.amazon.co.jp/dp/4873119049'
+type PropsType = {
+    size?:string,
+    isssl?:boolean,
+}
 
-export function useAmazon (urltext='', props?:{}) {
-    /*props*/
-    const SIZE = 'LZZZZZZZ'
-    const ISSSL = false
-
-    const host = `${ ISSSL?'images-na.ssl-images-':'images-jp.' }amazon.com`
+export function useAmazon (urltext='', {size='LZZZZZZZ',isssl=false}:PropsType={}) {
+    const host = `${ isssl?'images-na.ssl-images-':'images-jp.' }amazon.com`
     const data = useMemo(()=>{
         const url = new URL(`${urltext.match('https')?'':'https://'}${urltext}`)
         const paths = url.pathname.split('/').filter(v=>v)
@@ -18,12 +18,12 @@ export function useAmazon (urltext='', props?:{}) {
         const isbn = paths.find((_,i)=>i===index+1) || ''
         const name = index > 0 ? paths[0] : ''
         const ref  = paths.find(v=>v.match('ref='))?.split('ref=')[1] || ''
-        return {url:`${host}/dp/${isbn}`, name, isbn, ref, SIZE}
-    }, [urltext])
+        return {url:`${host}/dp/${isbn}`, name, isbn, ref, size}
+    }, [urltext, size, host])
     const img = useMemo(()=>{
-        const src = `http://${host}/images/P/${data.isbn}.09.${SIZE}`
+        const src = `http://${host}/images/P/${data.isbn}.09.${data.size}`
         const alt =  data.name
         return {src, alt}
-    }, [data])
+    }, [data, host])
     return {img, data}
 }

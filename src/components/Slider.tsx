@@ -39,8 +39,9 @@ export function Slider ({children, width=600,visible=4,style={}}:SliderProps) {
         onWheel:({offset:[,y],vxvy:[,vy]})=>{if(vy){dragOffset.current= y;runSprings(wheelOffset.current+y,  vy)}},
     })
     //return null
+    //console.log('\t\tRender Slider');
     return (
-        <div {...bind()} style={{position:"absolute",width:"100%",height:"100%"}}>
+        <div {...bind()} style={{position:"absolute",bottom:0,left:0,width:"100%",height:"100%"}}>
           {springs.map(({x}, i) => (
             <animated.div key={i} style={{position:'absolute',x,willChange:'transform',...style}}>
                 {children[i]}

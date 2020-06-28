@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 //import { Spring } from 'react-spring/renderprops'
 import { useSpring, animated } from 'react-spring'
 import { useGesture } from 'react-use-gesture'
@@ -7,22 +7,26 @@ import { useAmazon } from '../../src'//'use-amazon'
 type BookProps = {
     onOpen?:any,
     style?:any,
-    url?:string,
+    url  ?:string,
     limit?:number,
 }
 
 export function Book ({url='', limit=400, style={}, onOpen}:BookProps) {
-    const book = useAmazon(url, {})
+    const book = useAmazon(url)
+    const canopen = useRef(false)
     const [error, setError] = useState<boolean>(false)
     const [{scale,x,y}, set] = useSpring(()=>({ scale:1, x:0, y:0 }))
     const bind = useGesture({onHover:(e)=>set({scale:e.hovering?1.1:1}),
-        onDrag : ({down,vxvy:[,vy],movement:[mx,my],cancel})=>{
+        onDrag : ({down,movement:[mx,my],cancel})=>{
             if ((mx**2+my**2 > limit**2) && cancel) cancel()
             set({ x:down?mx:0, y:down?my:0, scale:(-limit/2<my&&my<limit/2)?1.2:0.8 })
-            if ((-limit/2<my&&my<limit/2)||mx<-100||100<mx||down) return
-            if (onOpen)
-                onOpen()
+            if ((-limit/2<my&&my<limit/2)||mx<-100||100<mx||down||!canopen.current) return null
+            console.log('hihihihi ');
+            canopen.current = false
+            onOpen()
+
         },
+        onClick : ()=>onOpen()
     })
     const styles = useMemo(()=>({
         div:{width:"auto", height:"100%", padding:"50px 50px",scale,x,y, zIndex:1, ...style} as React.CSSProperties,
