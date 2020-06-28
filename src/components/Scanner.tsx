@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import config from "../../config-camera.json";
 import './Scanner.css'
 
@@ -10,8 +10,8 @@ type ScannerProps = {
 }
 
 export function Scanner ({onStarted, onDetected}:ScannerProps) {
-    const onStartedRef = useRef((bool:boolean)=>onStarted(bool))
-    const onDetectedRef  = useRef((code:string)=>onDetected(code))
+    const onStartedRef = useRef((bool:boolean)=>onStarted(bool))  // err
+    const onDetectedRef  = useRef((code:string)=>onDetected(code))// err
     useEffect (() => {
         Quagga.init(config, (err:any)=> {
             if (err)

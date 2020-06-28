@@ -16,7 +16,7 @@ export function useAmazon (urltext='', {size='LZZZZZZZ',isssl=false}:PropsType={
         //const dpid = paths.find((_,i)=>i===index+1) || ''
         //const asin = ''//dpid[0]==='B' ? paths.find((_,i)=>i===index+1) :''
         const isbn = paths.find((_,i)=>i===index+1) || ''
-        const name = index > 0 ? paths[0] : ''
+        const name = index > 0 ? paths[0] : 'xxx'
         const ref  = paths.find(v=>v.match('ref='))?.split('ref=')[1] || ''
         return {url:`${host}/dp/${isbn}`, name, isbn, ref, size}
     }, [urltext, size, host])

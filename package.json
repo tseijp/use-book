@@ -1,13 +1,24 @@
 {
-  "main": "main.js",
-  "module": "module.es.js",
   "name": "use-amazon",
+  "main": "dist/main.js",
+  "module": "dist/module.es.js",
+  "license": "MIT",
   "version": "0.1.0",
   "private": false,
+  "homepage": "/",
+  "repository": "https://github.com/tseijp/use-amazon",
+  "bugs": "https://github.com/tseijp/use-amazon/issues",
+  "description": "a hook that lets you get product info from url or book cover in React",
+  "keywords": [
+    "react-component",
+    "react"
+  ],
   "dependencies": {
     "quagga": "^0.12.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-spring": "^9.0.0-rc.3",
+    "react-use-gesture": "^7.0.15",
     "typescript": "^3.7.5"
   },
   "scripts": {
@@ -44,8 +55,6 @@
     "cross-env": "^7.0.2",
     "react-app-rewired": "^2.1.6",
     "react-scripts": "3.4.1",
-    "react-spring": "^9.0.0-rc.3",
-    "react-use-gesture": "^7.0.15",
     "rollup": "^2.18.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
