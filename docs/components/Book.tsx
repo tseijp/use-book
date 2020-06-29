@@ -1,8 +1,7 @@
-import React, { useState, useMemo, useRef } from 'react'
-//import { Spring } from 'react-spring/renderprops'
-import { useSpring, animated } from 'react-spring'
+import React, { useMemo, useRef } from 'react'
 import { useGesture } from 'react-use-gesture'
-import { useAmazon } from '../../src'//'use-amazon'
+import { useSpring, animated } from 'react-spring'
+import { useAmazon } from '../../src' //'use-amazon'
 
 type BookProps = {
     onOpen?:any,
@@ -14,7 +13,6 @@ type BookProps = {
 export function Book ({url='', limit=400, style={}, onOpen}:BookProps) {
     const book = useAmazon(url)
     const canopen = useRef(false)
-    const [error, setError] = useState<boolean>(false)
     const [{scale,x,y}, set] = useSpring(()=>({ scale:1, x:0, y:0 }))
     const bind = useGesture({onHover:(e)=>set({scale:e.hovering?1.1:1}),
         onDrag : ({down,movement:[mx,my],cancel})=>{
@@ -31,12 +29,10 @@ export function Book ({url='', limit=400, style={}, onOpen}:BookProps) {
         img:{width:"auto", height:"100%", pointerEvents:"none"} as React.CSSProperties,
         span:{position:"absolute",bottom:"1em",left:"3em",color:"white"} as React.CSSProperties,
     }),[style,scale,x,y])
-    if (error)
-        return null
+    console.log('\t\tRender Book', book.img);
     return (
         <animated.div style={styles.div} {...bind()}>
-            <img style={styles.img} {...book.img} onError={()=>setError(true)}/>
-            <span style={styles.span}> {book.data.isbn} </span>
+            {book.img && <img style={styles.img} {...book.img}/>}
         </animated.div>
     )
 }

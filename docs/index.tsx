@@ -6,14 +6,14 @@ import { unregister } from './serviceWorker'
 import { Scanner, Sheet, Slider } from '../src'//'use-amazon'
 import { Book, Button } from './components'
 
-//const items1 = [...Array(9)].map((_,i)=>4041013380+i) // typescript 0~9
+//const items1 = [4041013379,4041013381]//[...Array(3)].map((_,i)=>4041013378+i) // typescript 0~9
+//const items1 = [4041013380,4041002872,4041315224,4041067949,4041366059,4041245255]//角川 false
 const items2 = [4041013380,4041002877,4041315220,4041067944,4041366054,4041245257]  //角川 true
-//const items = [4041013380,4041002872,4041315224,4041067949,4041366059,4041245255]//角川 false
 
 const App = () => {
-    const [urls, setUrls] = useState<string[]>([...items2].map(v=>`amazon.com/dp/${v}`))
+    const [urls, setUrls] = useState<string[]>([])//([...items2].map(v=>`amazon.com/dp/${v}/`))
     const [book, setBook] = useState<string>('')
-    const [books, setBooks] = useState<string[]>([...items2].map(v=>`amazon.com/dp/${v}`))
+    const [books, setBooks] = useState<string[]>([...items2].map(v=>`amazon.com/dp/${v}/`))
     const [opened, setOpened] = useState<boolean>(false); // sheet stil opened
     const [started, setStarted] = useState<boolean>(false); // quagga stil inited ?
     const addURL = useCallback((code:string)=>{
@@ -43,13 +43,13 @@ const App = () => {
                 }
                 {(opened && started)&&
                     <Slider width={200} visible={5} style={{height:"25%",bottom:"25%",left:0,}}>
-                    {books.map((url,i)=>
+                    {urls.map((url,i)=>
                         <Book key={i} url={url} onOpen={()=>opened&&(setOpened(false),addBook(url))}/>
                     )}
                     </Slider>
                 }
             </Sheet>
-            <Slider width={400} visible={5} style={{height:"50%",top:0,left:0,}}>
+            <Slider width={200} visible={5} style={{height:"50%",top:0,left:0,}}>
                 {books.map((url,i)=>
                     <Book key={i} url={url} onOpen={()=>setBook(url)}/>
                 )}

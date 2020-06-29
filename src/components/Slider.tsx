@@ -20,7 +20,7 @@ export function Slider ({children, width=600,visible=4,style={}}:SliderProps) {
     const dragOffset  = useRef(0)
     const runSprings = useCallback((xy, vxy)=>{
         const firstVis = idx(Math.floor(xy / width) % children.length)
-        const firstVisIdx = vxy < 0 ? children.length - visible - 1 : 1
+        const firstVisIdx = vxy < 0 ? children.length - visible : 0
         set((i:{}) => {
             const position     = getPos(i, firstVis       , firstVisIdx)
             const prevPosition = getPos(i, prev.current[0], prev.current[1])

@@ -26,7 +26,8 @@ export function Sheet ({children, height=100, started=false, onOpen=null,onClose
     useEffect(()=>{ f.current(started) }, [started])
     const style = useMemo(()=>{
         const display = y.to(py => (py < height ? 'block' : 'none'))
-        return {display, bottom:`calc(-100vh + ${height-100}px)`, y}
+        const backgroundColor = 'rgba(0,0,0,0)'
+        return {display, backgroundColor, bottom:`calc(-100vh + ${height-100}px)`, y}
     },[height, y])
     //console.log('\tRender Sheet');
     return (
