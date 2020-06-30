@@ -1,7 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import config from "../../config-camera.json";
-import './Scanner.css'
-
 const Quagga = require ('quagga');
 
 type ScannerProps = {
@@ -55,6 +53,10 @@ export function Scanner ({onStarted, onDetected}:ScannerProps) {
             Quagga.onDetected ((result:any) => onDetectedRef.current(result.codeResult.code) )
         });
     }, [])
+    const style = useMemo<React.CSSProperties>(()=>({
+        position: "absolute", top:0, left: 0,
+        width: "100%;", height: "100%", borderRadius:"10px 10px 0px",
+    }), [])
     //console.log('\t\tScanner Render');
     return <div id="interactive" className="viewport" style={{width:"100%",height:"100%",top:0,bottom:0}}/>
 }

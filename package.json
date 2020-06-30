@@ -26,7 +26,7 @@
     "eject": "react-app-rewired eject",
     "start": "cross-env NODE_ENV=development BABEL_ENV=development react-app-rewired start",
     "build": "cross-env NODE_ENV=production  BABEL_ENV=production  react-app-rewired build",
-    "compile": "cross-env NODE_ENV=production  BABEL_ENV=production  rollup -c config/rollup.config.js"
+    "compile": "cross-env NODE_ENV=production  BABEL_ENV=production  rollup -c config-rollup.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-typescript": "^4.1.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -58,6 +59,7 @@
     "rollup": "^2.18.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0"
   }

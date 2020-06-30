@@ -11,7 +11,6 @@ export function useAmazon (urltext='', {size='LZZZZZZZ',isssl=false,searches=10}
     const [img, setImg] = useState<any>(null)                  // RETURN MAIN OBJ
     const image = useRef<HTMLImageElement>(new Image())
     const srcRef = useRef<string>('')
-    //const urlRef = useRef<string>(urltext)
     const path = useMemo(()=>{
         //const url = new URL(`${urlRef.current.match('https')?'':'https://'}${urlRef.current}`)
         const url = new URL(`${urltext.match('https')?'':'https://'}${urltext}`)
@@ -25,7 +24,7 @@ export function useAmazon (urltext='', {size='LZZZZZZZ',isssl=false,searches=10}
         isbns.current.push( parseInt(isbn, 10) )
         //console.log('\t__useMemo path__', isbn);
         return {name, isbn, ref}
-    },[])
+    },[urltext])
     const onError = useCallback(()=>{
         const pre = isbns.current[0]
         const len = isbns.current.length

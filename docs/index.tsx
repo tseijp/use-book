@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment, useCallback, useState, useRef } from 'react'
 import ReactDOM from 'react-dom'
 //import { Spring } from 'react-spring/renderprops'
 import './styles.css'
@@ -16,46 +16,50 @@ const App = () => {
     const [books, setBooks] = useState<string[]>([...items2].map(v=>`amazon.com/dp/${v}/`))
     const [opened, setOpened] = useState<boolean>(false); // sheet stil opened
     const [started, setStarted] = useState<boolean>(false); // quagga stil inited ?
+    const nowDetecting = useRef<string|null>(null)
     const addURL = useCallback((code:string)=>{
-        console.log('Index add URL');
+        if (nowDetecting.current!==null) return
         if ( code.length!==10 && code.length!==13 ) return
-        const newURL = code.length===10?code:code.slice(3)
-        if ( urls.filter(url=>url===newURL).length ) return
-        setUrls(pre=>[newURL, ...pre])
+        const newcode = code.length===10?code:code.slice(3)
+        if ( urls.filter(url=>url.match(newcode)).length ) return
+        nowDetecting.current = newcode
+        setTimeout(()=>(nowDetecting.current = null), 2000)
+        setUrls(pre=>[...pre, `amazon.com/dp/${newcode}`])
+        console.log('Index add newcode', newcode);
     }, [urls])
-    const addBook = useCallback((url:string)=>setBooks(pre=>[url, ...pre]),[])
-    const height = window.innerHeight - 60
+    const addBook = useCallback((url:string)=>setBooks(pre=>[...pre, url]),[])
     console.log(`Index Render ${opened?'':'no '}opened ${started?'':'no '} started`);
     return (
         <Fragment>
             <Button
                 onOpen ={()=>!opened&&setOpened(true)  }//,setStarted(false))}
                 onClose={()=> opened&&setOpened(false) }//,setStarted(false))}
-                height ={height} limit={200} opened={opened} started={started}/>
+                height ={window.innerHeight*0.96} limit={200} opened={opened} started={started}/>
             <Sheet
-                onOpen ={()=>!opened&&(setOpened(true), setUrls([]))}
+                onOpen ={()=>!opened&&(setOpened(true), setBook(''), setUrls([]))}
                 onClose={()=> opened&&setOpened(false) }
-                height ={height} started={started} >
+                height ={window.innerHeight*0.96} started={started}>
                 {opened &&
                     <Scanner
-                        onStarted ={(bool:boolean)=>setStarted(bool)}
-                        onDetected={(code:string)=>addURL(code)}/>
+                        onStarted ={setStarted}
+                        onDetected={addURL}/>
                 }
                 {(opened && started)&&
-                    <Slider width={200} visible={5} style={{height:"25%",bottom:"25%",left:0,}}>
+                    <Slider width={window.innerWidth/4} visible={6} style={{height:"40%",bottom:"15%",left:0,}}>
                     {urls.map((url,i)=>
-                        <Book key={i} url={url} onOpen={()=>opened&&(setOpened(false),addBook(url))}/>
+                        <Book key={i} url={url}
+                            onOpen={()=>opened&&(setOpened(false),addBook(url))}/>
                     )}
                     </Slider>
                 }
             </Sheet>
-            <Slider width={200} visible={5} style={{height:"50%",top:0,left:0,}}>
+            <Slider width={window.innerWidth/3} visible={5} style={{height:"50%",top:0,left:0,}}>
                 {books.map((url,i)=>
                     <Book key={i} url={url} onOpen={()=>setBook(url)}/>
                 )}
             </Slider>
             {/*debug*/}
-            <div style={{position:"fixed",bottom:0,left:0,fontSize:"2em"}}>
+            <div style={{position:"fixed",width:"auto",height:"50%",bottom:0,left:0,fontSize:"2em"}}>
                 <span style={{color:"white"}}>
                     {book && <Book url={book} onOpen={()=>setBook('')}/>}
                 </span>

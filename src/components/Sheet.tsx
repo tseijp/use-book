@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback, useRef, useMemo } from 'react'
 import { useSpring, animated, config } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
-import './Sheet.css'
 
 type SheetProps = {
     height  ?:number
@@ -24,10 +23,14 @@ export function Sheet ({children, height=100, started=false, onOpen=null,onClose
     )
     const f = useRef((bool:boolean)=>( bool? open() : close() ))
     useEffect(()=>{ f.current(started) }, [started])
-    const style = useMemo(()=>{
-        const display = y.to(py => (py < height ? 'block' : 'none'))
-        const backgroundColor = 'rgba(0,0,0,0)'
-        return {display, backgroundColor, bottom:`calc(-100vh + ${height-100}px)`, y}
+    const style = useMemo<React.CSSProperties>(()=>{
+        const bottom = `calc(-100vh + ${height-100}px)`
+        const display = y.to(py =>(py<height?true:false)) ? 'block':'none'
+        return {
+            bottom, y, left: "2vw",  width:"96vw", height:"calc(100vh + 100px)",
+            display, position:"fixed", borderRadius:"4em 4em 0px", zIndex:100,
+            backgroundColor:'rgba(0,0,0,0)', touchAction: "none",
+        }
     },[height, y])
     //console.log('\tRender Sheet');
     return (

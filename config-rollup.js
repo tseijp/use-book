@@ -1,4 +1,5 @@
 //process.env.NODE_ENV="test"
+import json from 'rollup-plugin-json';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
@@ -21,6 +22,7 @@ const plugins = [
   ///nodeResolve({ jsnext: true, main: true }), // Locate and bundle third-party dependencies in node_modules
   ///commonjs({ include: 'node_modules/**' }),  // Convert CommonJS modules to ES6
 
+  json(),
   replace({ 'process.env.NODE_ENV': JSON.stringify('production') }), //Replace strings in files while bundling
   babel({ runtimeHelpers: true,exclude: 'node_modules/**', presets:['@babel/env','@babel/preset-react']}),// Compile your files with Babel
   nodeResolve({ browser: true }),
@@ -28,11 +30,11 @@ const plugins = [
   typescript({lib: ["es5", "es6", "dom"], target:"es5"}),
 ];
 
-import pkg from '../package.json';
+import pkg from './package.json';
 const dependencies = Object.keys(pkg.dependencies)||[];
 
 export default {
-    input: './src/index.ts',
+    input: './src/index.tsx',
     output:[
         { file: pkg.main   , format: 'cjs' },
         { file: pkg.module , format: 'es'  }],
