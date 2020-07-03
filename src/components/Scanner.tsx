@@ -1,62 +1,31 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import config from "../../config-camera.json";
+import { ScannerProps } from '../types'
 const Quagga = require ('quagga');
-
-type ScannerProps = {
-    onStarted  :Function,
-    onDetected :Function,
-}
 
 export function Scanner ({onStarted, onDetected}:ScannerProps) {
     const onStartedRef = useRef((bool:boolean)=>onStarted(bool))  // err
     const onDetectedRef  = useRef((code:string)=>onDetected(code))// err
     useEffect (() => {
         Quagga.init(config, (err:any)=> {
-            if (err)
-                return console.log(err, "error msg");
-            onStartedRef.current(true)
-            Quagga.start()
-            console.log('\t\t__Scanner Start__');
+            if (err) return console.log(err, "error msg");
+            return ( Quagga.start(), onStartedRef.current(true), console.log('\t\t__Scanner Start__') )
         })
-        return () => {
-            Quagga.stop()
-            onStartedRef.current(false)
-            console.log('\t\t~~Scanner Stop~~')
-        }
+        return () => 1&&( Quagga.stop(), onStartedRef.current(false), console.log('\t\t~~Scanner stop~~') )
     }, []);
+    const drawPath = useCallback((path:any,ctx:any,xy:any,color:string) => Quagga.ImageDebug.drawPath(path,xy,ctx,{color,lineWidth:2}),[])
+    const drawRect = useCallback((path:any,ctx:any,isMain:boolean) => drawPath(path,ctx,{x:0,y:1},isMain?'#0F0':"#00F"),[drawPath])
+    const clearRect = useCallback((dom:any,ctx:any)=>ctx.clearRect( 0, 0, ...["width","height"].map(s=>Number(dom.getAttribute(s))) ),[])
     useEffect(()=>{
-        type drawRectProps = { box:any,drawingCtx:any,color?:string,lineWidth?:number }
-        const drawRect = ({box,drawingCtx,color="green",lineWidth=2}:drawRectProps) => {
-            Quagga.ImageDebug.drawPath(box, {x:0,y:1}, drawingCtx, {color,lineWidth})
-        }
         Quagga.onProcessed((result:any) => {
-            let drawingCtx = Quagga.canvas.ctx.overlay
-            let drawingCanvas = Quagga.canvas.dom.overlay
-            if (!result)
-                return
-            if (result.boxes) {
-                drawingCtx.clearRect(0,0,
-                    Number(drawingCanvas.getAttribute("width")),
-                    Number(drawingCanvas.getAttribute("height"))
-                );
-                result.boxes
-                    .filter( (box:any) => box!==result.box )
-                    .forEach( (box:any) => drawRect({box, drawingCtx}) );
-            }
-            if (result.box) drawRect({box:result.box,drawingCtx,color:"#00F"})
-            if (!result.codeResult || !result.codeResult.code)
-                return
-            Quagga.ImageDebug.drawPath(
-                result.line, {x:"x",y:"y"},
-                drawingCtx , {color:"red",lineWidth:3}
-            );
-            Quagga.onDetected ((result:any) => onDetectedRef.current(result.codeResult.code) )
+            if (!result) return
+            const ctx = Quagga.canvas.ctx.overlay
+            const dom = Quagga.canvas.dom.overlay
+            result.boxes && clearRect(dom, ctx)
+            result.boxes.forEach( (box:any) => drawRect(box, ctx, box===result.box ))
+            result.codeResult && drawPath(result.line, ctx, {x:"x",y:"y"}, "#F00")
         });
-    }, [])
-    const style = useMemo<React.CSSProperties>(()=>({
-        position: "absolute", top:0, left: 0,
-        width: "100%;", height: "100%", borderRadius:"10px 10px 0px",
-    }), [])
-    //console.log('\t\tScanner Render');
+        Quagga.onDetected ((result:any) => onDetectedRef.current(result.codeResult.code) )
+    }, [drawPath,drawRect,clearRect])
     return <div id="interactive" className="viewport" style={{width:"100%",height:"100%",top:0,bottom:0}}/>
 }

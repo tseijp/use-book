@@ -1,9 +1,6 @@
 import { useCallback, useState, useEffect, useMemo, useRef  } from 'react'
-type PropsType = {
-    size?:string,
-    isssl?:boolean,
-    searches?:number,
-}
+import { PropsType } from './types'
+
 export function useAmazon (urltext='', {size='LZZZZZZZ',isssl=false,searches=10}:PropsType={}) {
     const host = useMemo(()=>`${ isssl?'images-na.ssl-images-':'images-jp.' }amazon.com`,[isssl])
     const getsrc = useCallback((num:number|string)=>`http://${host}/images/P/${num}.09.${size}`,[host,size])
