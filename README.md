@@ -1,22 +1,35 @@
 
 # use-amazon
 
-__use-amazon__ is a hook that lets you get product info from url or book cover in React.
+📚 __use-amazon__ is a hook that lets you get product info from url or book cover in React.
 
-### Agenda
-* Install via npm
-* Quick Started
-* Simple example
-* Available hooks
-* Fantastic Recipes
-* Performance pitfalls
+<p align="center">
+  <a href="https://github.com/tseijp/use-amazon">    <img alt="build passin"src="https://img.shields.io/badge/build-passing-green.svg"/></a>
+  <a href="https://github.com/tseijp/use-amazon">    <img alt="license MIT" src="https://img.shields.io/badge/license-MIT-green.svg"/></a>
+  <a href="https://www.npmjs.com/package/use-amazon"><img alt="npm package" src="https://img.shields.io/badge/npm_package-0.1.0-green.svg"/></a>
+  <a href="https://twitter.com/tseijp" >             <img alt="twitter URL" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Ftseijp"/></a>
+</p>
+
+<p align="middle">
+  <a href="https://tsei.jp/hook/use-amazon"><img src="https://res.cloudinary.com/dpimrj9cp/image/upload/v1593788244/demo1.gif" width="400"/></a>
+  <a href="https://tsei.jp/hook/use-amazon"><img src="https://res.cloudinary.com/dpimrj9cp/image/upload/v1593788210/demo2.gif" width="400"/></a>
+</p>
+
+
+### Table of Contents
+* [Install via npm](#install-via-npm)
+* [Quick started](#quick-started)
+* [Simple example](#simple-example)
+* [Available hooks](#available-hooks)
+* [~~Fantastic recipes~~](#fantastic-recipes)
+* [Performance pitfalls](#performance-pitfalls)
 
 ### Install via npm
 ```bash
 npm i use-amazon
 ```
 
-### Quick Started
+### Quick started
 ```bash
 git clone github.com/tseijp/use-amazon
 cd use-amazon
@@ -25,7 +38,7 @@ npm start
 ```
 
 * open browser and visit [localhost:3000](http://localhost:3000/)
-* Now you can go to our [demo](https://tsei.jp/hook/), and try its usage.
+* Now you can go to our [demo](https://tsei.jp/hook/use-amazon), and try its usage.
 
 ### Simple example
 
@@ -33,53 +46,35 @@ npm start
 import React from 'react'
 import { useAmazon } from 'use-amazon'
 
-function App() {
-    const url = 'https://amazon.com/xxx/dp/yyy'
-    const book = useAmazon(url)
+export function App() {
+    const book = useAmazon('https://amazon.com/xxx/dp/xxx')
     return <img {...book.img} />
 }
 ```
 
 ### Available hooks
-use-amazon exports several hooks that can handle
 
 | Hook         | Description                                |
 | ------------ | ------------------------------------------ |
 | `useAmazon`  | get amazon data from url                   |
 
 
-### Fantastic Recipes
-TODO
-
 ### Performance pitfalls
-TODO
 
-==================== memo ====================
+__URL__
 
-* ref
-* [Amazon の商品画像を取得する](https://www.ipentec.com/document/internet-get-amazon-product-image)
-* [プログラミングTypeScript](https://www.amazon.co.jp/dp/4873119049)
+_value_| https://{_HOST_}/images/P/{_ASIN/ISBN_}.{_COUNTRY_}.{_SIZE_}  
+:-|:-  
+_HOST_ | images-na.ssl-images-amazon.com or images-jp.amazon.com  
+_ISBN_ | International Standard Book Number  
+_ASIN_ | Amazon Standard Identification Number  
+_COUNTRY_|Japan:_09_  
 
-### Example
-url1 ... https://www.amazon.co.jp/...-Boris-Cherny/dp/4873119049/ref=sr_1_2?__mk_ja_JP=...child=1&keywords=typescript&qid=1592817611&sr=8-2
-url2 ... https://www.amazon.co.jp/dp/4873119049
-src1 ... http://images-jp.amazon.com/images/P/4873119049
-src2 ... http://images-na.ssl-images-amazon.com/images/P/4873119049
+__SIZE__
 
-### Image
-http://images-jp.amazon.com/images/P/{ASIN/ISBN}.{COUNTRY}.{IMAGE}
-https://images-na.ssl-images-amazon.com/images/P/{ASIN/ISBN}.{COUNTRY}.{IMAGE}
-
-ISBN(-10||-13) : International Standard Book Number（国際標準図書番号）... (978-)4-87311-904-5
-ASIN(-10) : Amazon Standard Identification Number ...
-COUNTRY ... 09
-IMAGE ...
-
-value    | mean     | w*h size | book size | notes  
+_value_    | mean     | w*h size | book size | notes  
 :-|:-|:-|:-|:-  
-THUMBZZZ | samnale  | 75×75   | 52×75    |  
-TZZZZZZZ | small    | 110×110 | 77×110   |  
-MZZZZZZZ | middle   | 160×160 | 112×160  |  
-LZZZZZZZ | large    | 500×500 | 349×500  | if h<500, return Full size image  
-
-==================== memo ====================
+`THUMBZZZ` | samnale  | 75×75   | 52×75    |  
+`TZZZZZZZ` | small    | 110×110 | 77×110   |  
+`MZZZZZZZ` | middle   | 160×160 | 112×160  |  
+`LZZZZZZZ` | large    | 500×500 | 349×500  | if h<500, return Full size image  

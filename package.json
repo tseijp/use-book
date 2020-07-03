@@ -6,8 +6,14 @@
   "version": "0.1.0",
   "private": false,
   "homepage": "/",
-  "repository": "https://github.com/tseijp/use-amazon",
-  "bugs": "https://github.com/tseijp/use-amazon/issues",
+  "author": "tseijp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tseijp/use-amazon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tseijp/use-amazon/issues"
+  },
   "description": "a hook that lets you get product info from url or book cover in React",
   "keywords": [
     "react-component",
@@ -62,5 +68,8 @@
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0"
+  },
+  "directories": {
+    "doc": "docs"
   }
 }

@@ -1,0 +1,12 @@
+.git
+.gitignore
+build
+docs
+node_modules
+public
+scripts
+src
+config-camera.json
+config-overrides.js
+config-rollup.js
+package-lock.json
