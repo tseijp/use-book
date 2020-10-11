@@ -11,8 +11,10 @@
 </p>
 
 <p align="middle">
-  <a href="https://tsei.jp/hook/use-amazon"><img src="https://res.cloudinary.com/dpimrj9cp/image/upload/v1593788244/demo1.gif" width="400"/></a>
-  <a href="https://tsei.jp/hook/use-amazon"><img src="https://res.cloudinary.com/dpimrj9cp/image/upload/v1593788210/demo2.gif" width="400"/></a>
+  <a href="https://tsei.jp/hook/use-amazon"><img src="https://i.imgur.com/TayLxZL.gif" width="400"/></a>
+  <a href="https://tsei.jp/hook/use-amazon"><img src="https://i.imgur.com/w3yDcjt.gif" width="400"/></a>
+  <a href="https://tsei.jp/hook/use-amazon"><img src="https://i.imgur.com/ulvQQxw.gif" width="400"/></a>
+  <a href="https://tsei.jp/hook/use-amazon"><img src="https://i.imgur.com/DzqbYHz.gif" width="400"/></a>
 </p>
 
 

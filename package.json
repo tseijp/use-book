@@ -3,7 +3,7 @@
   "main": "dist/main.js",
   "module": "dist/module.es.js",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "homepage": "/",
   "author": "tseijp",
@@ -14,7 +14,7 @@
   "bugs": {
     "url": "https://github.com/tseijp/use-amazon/issues"
   },
-  "description": "a hook that lets you get product info from url or book cover in React",
+  "description": "📚a hook that lets you get product info from url or book cover in React",
   "keywords": [
     "react-component",
     "react"
@@ -62,7 +62,7 @@
     "cross-env": "^7.0.2",
     "react-app-rewired": "^2.1.6",
     "react-scripts": "3.4.1",
-    "rollup": "^2.18.0",
+    "rollup": "^2.21.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",

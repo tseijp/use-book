@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 //import { Spring } from 'react-spring/renderprops'
 import './styles.css'
 import { unregister } from './serviceWorker'
-import { Scanner, Sheet, Slider } from '../src'//'use-amazon'
-import { Book, Button } from './components'
+import { Book, Button, Scanner, Sheet, Slider } from './components'
 
 //const items1 = [4041013379,4041013381]//[...Array(3)].map((_,i)=>4041013378+i) // typescript 0~9
 //const items1 = [4041013380,4041002872,4041315224,4041067949,4041366059,4041245255]//角川 false
