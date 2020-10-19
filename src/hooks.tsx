@@ -1,27 +1,15 @@
 import { useCallback, useState, useEffect, useMemo, useRef  } from 'react'
 import { PropsType } from './types'
+import {getPath} from './utils'
 
-export function useAmazon (urltext='', {size='LZZZZZZZ',isssl=false,searches=10}:PropsType={}) {
+export function useBook (urltext='', {size='LZZZZZZZ',isssl=false,searches=10}:PropsType={}) {
     const host = useMemo(()=>`${ isssl?'images-na.ssl-images-':'images-jp.' }amazon.com`,[isssl])
     const getsrc = useCallback((num:number|string)=>`http://${host}/images/P/${num}.09.${size}`,[host,size])
     const isbns = useRef<number[]>([])                       // TO CALC NEXT SRC!
     const [img, setImg] = useState<any>(null)                  // RETURN MAIN OBJ
     const image = useRef<HTMLImageElement>(new Image())
     const srcRef = useRef<string>('')
-    const path = useMemo(()=>{
-        //const url = new URL(`${urlRef.current.match('https')?'':'https://'}${urlRef.current}`)
-        const url = new URL(`${urltext.match('https')?'':'https://'}${urltext}`)
-        const paths = url.pathname.split('/').filter(v=>v)
-        const index = paths.map((v,i) => v==='dp'&&i ).find(v=>v) || 0
-        //const dpid = paths.find((_,i)=>i===index+1) || ''
-        //const asin = ''//dpid[0]==='B' ? paths.find((_,i)=>i===index+1) :''
-        const isbn = paths.find((_,i)=>i===index+1) || ''
-        const name = index > 0 ? paths[0] : ''
-        const ref  = paths.find(v=>v.match('ref='))?.split('ref=')[1] || ''
-        isbns.current.push( parseInt(isbn, 10) )
-        //console.log('\t__useMemo path__', isbn);
-        return {name, isbn, ref}
-    },[urltext])
+    const path = useMemo(()=>getPath(urltext, isbns),[urltext])
     const onError = useCallback(()=>{
         const pre = isbns.current[0]
         const len = isbns.current.length
@@ -49,7 +37,7 @@ export function useAmazon (urltext='', {size='LZZZZZZZ',isssl=false,searches=10}
         }
         //console.log('\t__useEffect__ setImg', num)
     }, [getsrc, onError, path, img?.src])
-    //console.log('\tRender useAmazon',isbns.current);
+    //console.log('\tRender useBook',isbns.current);
     return {path, image, img}
 }
 
