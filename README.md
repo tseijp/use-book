@@ -1,20 +1,20 @@
 
-# use-amazon
+# use-book
 
-📚 __use-amazon__ is a hook that lets you get product info from url or book cover in React.
+📚 __use-book__ is a hook that lets you get product info from url or book cover in React.
 
 <p align="center">
-  <a href="https://github.com/tseijp/use-amazon">    <img alt="build passin"src="https://img.shields.io/badge/build-passing-green.svg"/></a>
-  <a href="https://github.com/tseijp/use-amazon">    <img alt="license MIT" src="https://img.shields.io/badge/license-MIT-green.svg"/></a>
-  <a href="https://www.npmjs.com/package/use-amazon"><img alt="npm package" src="https://img.shields.io/badge/npm_package-0.1.0-green.svg"/></a>
-  <a href="https://twitter.com/tseijp" >             <img alt="twitter URL" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Ftseijp"/></a>
+  <a href="https://github.com/tseijp/use-book">    <img alt="build passin"src="https://img.shields.io/badge/build-passing-green.svg"/></a>
+  <a href="https://github.com/tseijp/use-book">    <img alt="license MIT" src="https://img.shields.io/badge/license-MIT-green.svg"/></a>
+  <a href="https://www.npmjs.com/package/use-book"><img alt="npm package" src="https://img.shields.io/badge/npm_package-0.1.0-green.svg"/></a>
+  <a href="https://twitter.com/tseijp" >           <img alt="twitter URL" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Ftseijp"/></a>
 </p>
 
 <p align="middle">
-  <a href="https://tsei.jp/hook/use-amazon"><img src="https://i.imgur.com/TayLxZL.gif" width="400"/></a>
-  <a href="https://tsei.jp/hook/use-amazon"><img src="https://i.imgur.com/w3yDcjt.gif" width="400"/></a>
-  <a href="https://tsei.jp/hook/use-amazon"><img src="https://i.imgur.com/ulvQQxw.gif" width="400"/></a>
-  <a href="https://tsei.jp/hook/use-amazon"><img src="https://i.imgur.com/DzqbYHz.gif" width="400"/></a>
+  <a href="https://tsei.jp/hook/use-book"><img src="https://i.imgur.com/TayLxZL.gif" width="400"/></a>
+  <a href="https://tsei.jp/hook/use-book"><img src="https://i.imgur.com/w3yDcjt.gif" width="400"/></a>
+  <a href="https://tsei.jp/hook/use-book"><img src="https://i.imgur.com/ulvQQxw.gif" width="400"/></a>
+  <a href="https://tsei.jp/hook/use-book"><img src="https://i.imgur.com/DzqbYHz.gif" width="400"/></a>
 </p>
 
 
@@ -28,37 +28,37 @@
 
 ### Install via npm
 ```bash
-npm i use-amazon
+npm i use-book
 ```
 
 ### Quick started
 ```bash
-git clone github.com/tseijp/use-amazon
-cd use-amazon
+git clone github.com/tseijp/use-book
+cd use-book
 npm i
 npm start
 ```
 
 * open browser and visit [localhost:3000](http://localhost:3000/)
-* Now you can go to our [demo](https://tsei.jp/hook/use-amazon), and try its usage.
+* Now you can go to our [demo](https://tsei.jp/hook/use-book), and try its usage.
 
 ### Simple example
 
 ```js
 import React from 'react'
-import { useAmazon } from 'use-amazon'
+import { useBook } from 'use-book'
 
 export function App() {
-    const book = useAmazon('https://amazon.com/xxx/dp/xxx')
+    const book = useBook('https://amazon.com/xxx/dp/xxx')
     return <img {...book.img} />
 }
 ```
 
 ### Available hooks
 
-| Hook         | Description                                |
-| ------------ | ------------------------------------------ |
-| `useAmazon`  | get amazon data from url                   |
+| Hook       | Description                                |
+| ---------- | ------------------------------------------ |
+| `useBook`  | get amazon data from url                   |
 
 
 ### Performance pitfalls

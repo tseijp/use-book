@@ -1,9 +1,3 @@
-export type PropsType = {
-    size?:string,
-    isssl?:boolean,
-    searches?:number,
-}
-
 export type SheetProps = {
     height  ?:number
     started ?:boolean,

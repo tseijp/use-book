@@ -1,43 +1,53 @@
-//process.env.NODE_ENV="test"
-import json from 'rollup-plugin-json';
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import replace from 'rollup-plugin-replace';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
-//import postcss from 'rollup-plugin-postcss';
-//import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-//import dts from 'rollup-plugin-dts';
-//import { terser } from 'rollup-plugin-terser';
-
-//import css from 'rollup-plugin-css-porter';
-//import svg from 'rollup-plugin-svg';
-//import uglify from 'rollup-plugin-uglify-es';
-
-const namedExports= {'node_modules/react/index.js':['Component','useState',]}
-const plugins = [
-  //peerDepsExternal(),
-  //postcss({ extract: false }),
-  //terser()
-  ///nodeResolve({ jsnext: true, main: true }), // Locate and bundle third-party dependencies in node_modules
-  ///commonjs({ include: 'node_modules/**' }),  // Convert CommonJS modules to ES6
-
-  json(),
-  replace({ 'process.env.NODE_ENV': JSON.stringify('production') }), //Replace strings in files while bundling
-  babel({ runtimeHelpers: true,exclude: 'node_modules/**', presets:['@babel/env','@babel/preset-react']}),// Compile your files with Babel
-  nodeResolve({ browser: true }),
-  commonjs({namedExports}),
-  typescript({lib: ["es5", "es6", "dom"], target:"es5"}),
-];
-
+import { promises as fs } from 'fs';
+import babel from '@rollup/plugin-babel';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import pkg from './package.json';
-const dependencies = Object.keys(pkg.dependencies)||[];
 
-export default {
-    input: './src/index.tsx',
-    output:[
-        { file: pkg.main   , format: 'cjs' },
-        { file: pkg.module , format: 'es'  }],
-    external:dependencies,
-    plugins,
-};
+const input = 'src/index'
+const external = Object.keys({...pkg.dependencies,...pkg.devDependencies})
+const extensions = ['.js', '.jsx', '.ts', '.tsx']
+
+function babelOption (useESModules) {
+    return {
+        babelrc:false,
+        exclude:'**/node_modules/**',
+        extensions,
+        babelHelpers:'runtime',
+        presets : [
+            ['@babel/env', {loose:true, modules:false}],
+             '@babel/preset-react','@babel/preset-typescript'
+        ],
+        plugins : [
+            [ '@babel/proposal-class-properties'         ,    {loose:true} ],
+            [ '@babel/plugin-proposal-object-rest-spread',    {loose:true} ],
+            [ 'transform-react-remove-prop-types',     {removeImport:true} ],
+            [ '@babel/transform-runtime', {regenerator:false,useESModules} ],
+        ],
+    }
+}
+
+function targetTypings(out) {
+  return {
+    writeBundle () {
+      return fs.lstat(pkg.types).catch(() => {
+        return fs.writeFile(pkg.types, `export * from "./${input}"`)
+      })
+    }
+  }
+}
+
+export default [
+    { input, output:{file:pkg.main   ,format:'cjs'}, external, plugins:[
+            babel( babelOption(true) ),
+            commonjs({extensions}),
+            resolve ({extensions}),
+            targetTypings(),
+    ] },
+    { input, output:{file:pkg.module ,format:'esm'}, external, plugins:[
+            babel( babelOption(false) ),
+            commonjs({extensions}),
+            resolve ({extensions}),
+            targetTypings(),
+    ] },
+]

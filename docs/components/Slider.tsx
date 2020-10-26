@@ -7,7 +7,7 @@ import { SliderProps } from '../types'
 
 export function Slider ({children, width=600,visible=4,style={}}:SliderProps) {
     const len = useMemo(()=>(children.length>visible)?children.length:visible,[children,visible])
-    const idx = useCallback((x) => (x<0 ? x+len : x) % len, [children,len])
+    const idx = useCallback((x) => (x<0 ? x+len : x) % len, [len])
     const getPos = useCallback((i, firstVis, firstVisIdx) => idx(i - firstVis + firstVisIdx), [idx])
     const [springs, set] = useSprings(len, i => ({ x : (i<len-1?i:-1)*width }) )
     const prev        = useRef([0, 1])

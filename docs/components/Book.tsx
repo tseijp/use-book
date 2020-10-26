@@ -1,7 +1,7 @@
 import React, { useMemo, useRef } from 'react'
 import { useGesture } from 'react-use-gesture'
 import { useSpring, animated } from 'react-spring'
-import { useAmazon } from '../../src' //'use-amazon'
+import { useBook } from '../../src'
 
 type BookProps = {
     onOpen?:any,
@@ -11,7 +11,7 @@ type BookProps = {
 }
 
 export function Book ({url='', limit=400, style={}, onOpen}:BookProps) {
-    const book = useAmazon(url)
+    const book = useBook(url)
     const cantopen = useRef(false)
     const [{scale,x,y}, set] = useSpring(()=>({ scale:1, x:0, y:0 }))
     const bind = useGesture({
@@ -35,7 +35,7 @@ export function Book ({url='', limit=400, style={}, onOpen}:BookProps) {
     //console.log('\t\tRender Book', book.img);
     return (
         <animated.div style={styles.div} {...bind()}>
-            {book.img && <img style={styles.img} {...book.img}/>}
+            {book.img && <img alt="book" style={styles.img} {...book.img}/>}
         </animated.div>
     )
 }
