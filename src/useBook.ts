@@ -9,18 +9,26 @@ export function useBook (urltext='', {size='LZZZZZZZ',isssl=false,search=10}:any
     const isbns = useRef<number[]>([])
     const image = useRef<HTMLImageElement>(new Image())
     const srcRef = useRef<string>('')
-    const host  = useMemo(()=>`${ isssl?'images-na.ssl-images-':'images-jp.' }amazon.com`,[isssl])
+
     const path  = useMemo(()=>getPath(urltext, isbns),[urltext])
-    const [img, setImg] = useState<any>(null)                  // RETURN MAIN OBJ
-    const getsrc = useCallback((num:number|string)=>`http://${host}/images/P/${num}.09.${size}`,[host,size])
+    const host  = useMemo(()=>`${ isssl
+        ? 'images-na.ssl-images-'
+        : 'images-jp.' }amazon.com`,[isssl])
+    const [img, setImg] = useState<any>(null)
+
+    const getsrc = useCallback((num:number|string) =>
+        `http://${host}/images/P/${num}.09.${size}`
+    ,[host,size])
+
     const onError = useCallback(()=>{
         const pre = isbns.current[0]
         const len = isbns.current.length
         const num = pre + ~~((len+1)/2)*(len%2*2-1)
-        if(len > search || srcRef.current) return                // OVERFLOW !
+        if(len > search || srcRef.current) return
         isbns.current.push( num )
         return setImg((pre:any)=>({...pre, src:getsrc(num)}))
     }, [getsrc, search])
+
     useEffect(()=>{
         if (srcRef.current)
             return //console.log('useEffect interupt', srcRef.current)
@@ -36,7 +44,7 @@ export function useBook (urltext='', {size='LZZZZZZZ',isssl=false,search=10}:any
                 return onError()
             srcRef.current = image.current.src
         }
-    }, [getsrc, onError, path, img.src])
-    //console.log('\tRender useBook',isbns.current);
+    }, [getsrc, onError, path, img])
+
     return {path, image, img}
 }
