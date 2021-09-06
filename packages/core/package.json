@@ -1,0 +1,87 @@
+{
+    "name": "use-book",
+    "author": "tsei",
+    "license": "MIT",
+    "private": false,
+    "sideEffect": false,
+    "version": "1.0.0",
+    "module": "index.js",
+    "types": "index.d.ts",
+    "main": "index.cjs.js",
+    "files": [
+        "src",
+        "index.js",
+        "index.d.ts",
+        "index.cjs.js"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "homepage": "https://github.com/tseijp/use-midi#readme",
+    "bugs": {
+        "url": "https://github.com/tseijp/use-midi/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tseijp/use-midi.git"
+    },
+    "description": "📚a hook that lets you get product info from url or book cover in React",
+    "keywords": [
+        "react-component",
+        "react-hook",
+        "react"
+    ],
+    "scripts": {
+        "test": "react-app-rewired test",
+        "eject": "react-app-rewired eject",
+        "start": "cross-env NODE_ENV=development BABEL_ENV=development react-app-rewired start",
+        "build": "cross-env NODE_ENV=production    BABEL_ENV=production    react-app-rewired build",
+        "compile": "cross-env NODE_ENV=production    BABEL_ENV=production    rollup -c config-rollup.js"
+    },
+    "devDependencies": {
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-typescript": "^4.1.2",
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.5.0",
+        "@testing-library/user-event": "^7.2.1",
+        "@types/jest": "^24.9.1",
+        "@types/node": "^12.12.47",
+        "@types/react": "^16.9.38",
+        "@types/react-dom": "^16.9.8",
+        "cross-env": "^7.0.2",
+        "parsed-path": "^0.1.15",
+        "quagga": "^0.12.1",
+        "react": "17.0.2",
+        "react-app-rewired": "^2.1.6",
+        "react-dom": "17.0.2",
+        "react-mixing": "^0.1.0",
+        "react-scripts": "3.4.1",
+        "react-spring": "^9.0.0-rc.3",
+        "react-use-gesture": "^7.0.15",
+        "rollup": "^2.21.0",
+        "rollup-plugin-babel": "^4.4.0",
+        "rollup-plugin-commonjs": "^10.1.0",
+        "rollup-plugin-json": "^4.0.0",
+        "rollup-plugin-node-resolve": "^5.2.0",
+        "rollup-plugin-replace": "^2.2.0",
+        "typescript": "^3.7.5"
+    },
+    "directories": {
+        "doc": "docs"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}

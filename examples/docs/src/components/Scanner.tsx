@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import config from "../../config-camera.json";
+import config from "./camera.config.json";
 import { ScannerProps } from '../types'
 const Quagga = require ('quagga');
 
