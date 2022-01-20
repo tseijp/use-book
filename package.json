@@ -29,7 +29,10 @@
     "build": "cross-env NODE_ENV=production  BABEL_ENV=production  react-app-rewired build",
     "compile": "cross-env NODE_ENV=production  BABEL_ENV=production  rollup -c config-rollup.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/styled-components": "^5.1.20",
+    "styled-components": "^5.3.3"
+  },
   "devDependencies": {
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-typescript": "^4.1.2",
@@ -40,8 +43,8 @@
     "@types/node": "^12.12.47",
     "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
-    "quagga": "^0.12.1",
     "cross-env": "^7.0.2",
+    "quagga": "^0.12.1",
     "react": "^16.13.1",
     "react-app-rewired": "^2.1.6",
     "react-dom": "^16.13.1",

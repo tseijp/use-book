@@ -1,41 +1,54 @@
-import React, { useMemo, useRef } from 'react'
-import { useGesture } from 'react-use-gesture'
-import { useSpring, animated } from 'react-spring'
-import { useBook } from '../../src'
+import React, { useRef } from "react";
+import { useSpring, animated } from "react-spring";
+import { useGesture } from "react-use-gesture";
+import styled from "styled-components";
+import { useBook } from "../../src";
 
-type BookProps = {
-    onOpen?:any,
-    style?:any,
-    url  ?:string,
-    limit?:number,
-}
+const Div = styled(animated.div)`
+  width: auto;
+  height: 100%;
+  z-index: 1;
+`
+
+const Img = styled.img`
+  width: auto;
+  hheight: 100%;
+  border-radius: 1rem;
+  pointer-events: none;
+`
+
+type BookProps = Partial<{
+  onOpen: any
+  style: any
+  url: string
+  limit: number
+}>
 
 export function Book ({url='', limit=400, style={}, onOpen}:BookProps) {
-    const book = useBook(url)
-    const cantopen = useRef(false)
-    const [{scale,x,y}, set] = useSpring(()=>({ scale:1, x:0, y:0 }))
-    const bind = useGesture({
-        onHover:(e)=>set({scale:e.hovering?1.1:1}),
-        onClick:(e)=>1&&(onOpen(), e.stopPropagation()),
-        onDrag :({down,vxvy:[vx,],movement:[mx,my],cancel})=>{
-            if ((mx**2+my**2 > limit**2) && cancel) cancel()
-            const notOpen = 100<Math.floor(mx)||2<Math.floor(vx)||down||cantopen.current
-            set({ x:down?mx:0, y:down?my:0, scale:(notOpen&&Math.floor(my)<limit/2)?1.2:0.8 })
-            //console.log(100<Math.floor(mx),2<Math.floor(vx),down,cantopen.current);
-            if (notOpen) return null
-            cantopen.current = true
-            onOpen()
-        },
-    })
-    const styles = useMemo(()=>({
-        div:{width:"auto",height:"100%",scale,x,y, zIndex:1, ...style} as React.CSSProperties,
-        img:{width:"auto",height:"100%",borderRadius:"1em",pointerEvents:"none", } as React.CSSProperties,
-        //span:{position:"absolute",bottom:"1em",left:"3em",color:"white"} as React.CSSProperties,
-    }),[style,scale,x,y])
-    //console.log('\t\tRender Book', book.img);
-    return (
-        <animated.div style={styles.div} {...bind()}>
-            {book.img && <img alt="book" style={styles.img} {...book.img}/>}
-        </animated.div>
-    )
+  const book = useBook(url);
+  const cantOpen = useRef(false);
+  const [spring, set] = useSpring(() => ({ scale:1, x:0, y:0 }));
+  const bind = useGesture({
+    onHover: e => set({scale:e.hovering?1.1:1}),
+    onClick: e => { onOpen(); e.stopPropagation() },
+    onDrag: state => {
+      const { down, vxvy: [vx,], movement: [mx,my], cancel } = state;
+      if ((mx**2 + my**2 > limit**2) && cancel) cancel();
+      const notOpen = 100 < Math.floor(mx)
+        || 2 < Math.floor(vx)
+        || down
+        || cantOpen.current;
+      const scale = (notOpen && Math.floor(my) < limit/2)? 1.2: 0.8;
+      set({ x: down? mx: 0, y: down? my: 0, scale });
+      if (notOpen) return null;
+      cantOpen.current = true;
+      onOpen();
+    },
+  })
+
+  return (
+    <Div style={{...spring, ...style}} {...bind()}>
+      {book.img && <Img alt="" {...book.img}/>}
+    </Div>
+  );
 }
