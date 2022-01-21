@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-#/dist
+# dist
 index.js
 index.d.ts
 index.cjs.js
@@ -12,6 +12,7 @@ index.cjs.js
 
 # testing
 /coverage
+
 # production
 /build
 
