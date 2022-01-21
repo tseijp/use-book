@@ -1,11 +1,18 @@
-import {useBook} from './useBook'
-export {useBook} from './useBook'
+import { useState, useEffect } from "react";
+import { Controller, Props, State } from "./Controller";
 
-export function Book (props: {
+export function useBook (props: Props): State
+
+export function useBook (props: Props) {
+    const [ctrl] = useState(new Controller())
+    useEffect(() => ctrl.effect())
+    return ctrl.apply(props)
+}
+
+export function Book (props: Props & {
   children: (props:any) => JSX.Element,
-  url: string,
 }): JSX.Element;
 
-export function Book ({children, url="", ...config}: any) {
-  return children(useBook(url, ...config) as any);
+export function Book ({children, ...props}: any) {
+  return children(useBook(props) as any);
 }
