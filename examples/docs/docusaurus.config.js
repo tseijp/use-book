@@ -1,114 +1,67 @@
+// @ts-check
+// Note: type annotations allow type checking and IDEs autocompletion
+
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const math = require('remark-math');
+const katex = require('rehype-katex');
 
-// With JSDoc @type annotations, IDEs can provide config autocompletion
-/** @type {import('@docusaurus/types').DocusaurusConfig} */
-(module.exports = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+/** @type {import('@docusaurus/types').Config} */
+const config = {
+  url: 'https://tseijp.github.io',
+  title: 'use-book',
+  baseUrl: '/use-book/',
+  tagline: '📚a hook that lets you get product info from url or book cover in React',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
-
+  favicon: 'img/favicon.png',
+  organizationName: 'tseijp',
+  projectName: 'use-book',
   presets: [
-    [
-      '@docusaurus/preset-classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
-        docs: {
-          sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/edit/main/website/',
-        },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/facebook/docusaurus/edit/main/website/blog/',
-        },
-        theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-      }),
-    ],
+    [ 'classic', { theme: {}, docs: {
+      id: 'documents',
+      path: 'documents',
+      routeBasePath: 'documents',
+      remarkPlugins: [math],
+      rehypePlugins: [katex]
+    }}]
   ],
-
+  plugins: [
+    [ '@docusaurus/plugin-content-docs', {
+      id: 'examples',
+      path: 'examples',
+      routeBasePath: 'examples',
+      remarkPlugins: [math],
+      rehypePlugins: [katex],
+    }],
+  ],
+  themes: ['@docusaurus/theme-live-codeblock'],
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      navbar: {
-        title: 'My Site',
-        logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
-        },
-        items: [
-          {
-            type: 'doc',
-            docId: 'intro',
-            position: 'left',
-            label: 'Tutorial',
-          },
-          {to: '/blog', label: 'Blog', position: 'left'},
-          {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
-      },
+      navbar: { title: 'use-book', logo: { alt: ' ', src: 'img/favicon.png'}, items: [
+        { type: 'doc', docId: 'index', position: 'left', label: 'Documents', docsPluginId: 'documents'},
+        { type: 'doc', docId: 'index', position: 'left', label: 'Examples', docsPluginId: 'examples'},
+        { href: 'https://github.com/tseijp/use-book', label: 'GitHub', position: 'right' },
+      ]},
+      footer: { style: 'dark', links: [
+        { title: 'Docs', items: [{ label: 'Introduction', to: '/documents' }] },
+        { title: 'Community', items: [
+          { label: 'Stack Overflow', href: 'https://stackoverflow.com/questions/tagged/tseijp' },
+          { label: 'Twitter', href: 'https://twitter.com/tseijp' },
+        ]},
+        { title: 'More', items: [
+          { label: 'Examples', to: '/examples' },
+          { label: 'GitHub', href: 'https://github.com/tseijp/use-book' },
+        ]},
+      ], copyright: `Copyright © ${new Date().getFullYear()} tseijp, Inc. Built with Docusaurus.`},
+      prism: { theme: lightCodeTheme, darkTheme: darkCodeTheme },
     }),
-});
+    stylesheets: [{
+      href: "https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css",
+      integrity: "sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc",
+      crossorigin: "anonymous",
+    }],
+};
+
+module.exports = config;

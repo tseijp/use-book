@@ -15,18 +15,17 @@
         "examples/*"
     ],
     "scripts": {
-        "core@latest": "lerna add @docusaurus/core@latest --dev --scope @use-book/docs",
-        "preset@latest": "lerna add  @docusaurus/preset-classic@latest --dev --scope @use-book/docs",
-        "latest": "yarn run core@latest & yarn run preset@latest",
-        "init": "npm i -g yarn lerna && npx lerna bootstrap",
-        "start": "lerna exec --scope @use-book/docs -- yarn start",
-        "build": "lerna exec --scope @use-book/docs -- yarn build",
-        "deploy": "lerna exec --scope @use-book/docs -- yarn deploy",
-        "rollup": "lerna exec --scope use-book -- yarn  rollup -c",
-        "npm": "lerna exec --scope use-book -- yarn publish",
-        "cov": "lerna exec --scope use-book -- jest --coverage",
-        "watch": "lerna exec --scope use-book -- jest --watch --runInBand",
-        "ls": "lerna exec --scope use-book -- npm pack --dry-run"
+        "bootstrap": "yarn lerna bootstrap",
+        "clean": "yarn lerna clean -y",
+        "init": "npm i -g yarn lerna && yarn bootstrap",
+        "start": "cd examples/docs && yarn start",
+        "build": "cd examples/docs && yarn build",
+        "deploy": "cd examples/docs && yarn deploy",
+        "rollup": "cd packages/core && yarn  rollup -c",
+        "npm": "cd packages/core && yarn publish",
+        "cov": "cd packages/core && jest --coverage",
+        "watch": "cd packages/core && jest --watch --runInBand",
+        "ls": "cd packages/core && npm pack --dry-run"
     },
     "devDependencies": {
         "lerna": "^4.0.0"

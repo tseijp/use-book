@@ -1,79 +1,106 @@
+export type Fun = (...args: any[]) => void
+
 export type Props = Partial<{
-  urltext:string
+  src:string
+  isbn: string|number
   size: string
   isssl: boolean
   search: number
-  img: any, setImg: any // useState
 }>
 
 export type State = Partial<{
-  isbns: number[]
-  image: any // @TODO typeof Image
-  srcRef: string
-  path: any
+  isbns: (string|number)[]
+  isbn: string|number
+  src: string
+  alt: string
   host: string
+  size: string
+  ref: any
+  image: HTMLImageElement
 }>
 
 export class Controller {
-  props: Props = {}
-  state: State = {isbns: [], image: new Image(), srcRef: ''}
+  props: Props = {};
+  state: State = {};
+  render: Fun = () => {};
+  isChanged = true;
 
-  apply(props: Props) {
-    const { isssl } = props
-    const { state: $ } = this;
-    this.props = props
-    $.path = this.getPath()
-    $.host = `${isssl
-      ? 'images-na.ssl-images-'
-      : 'images-jp.' }amazon.com`
-    return $
+  apply(render: Fun, props: Props, ref?: any) {
+    this.render = render;
+    this.props = props;
+    this.state.ref = ref
+    return this.state;
   }
 
   effect () {
-    const { props, state: $ } = this
-    if ($.srcRef) return console.warn('useEffect interupt');
-    const num = $.isbns!.slice(-1)[0] || $.path.isbn;
-    const src = this.getSrc(num);
-    const alt =  $.path.name || '';
-    props.setImg({src, alt});
-    $.image.src = src;
-    $.image.current.onload = this.load.bind(this)
+    const $ = this.state;
+    if (!this.isChanged) return
+    this.isChanged = false;
+    this.setup();
+    $.image = $.image || new Image();
+    $.image.onload = this.load.bind(this);
+    $.image.src = $.src!;
+    $.image.alt = $.alt || "";
   }
 
   load () {
-    const { state: $ } = this
-    const width = $.image.width;
-    const height = $.image.current.height;
-    if (width < 2 || height < 2) return this.error();
-    $.srcRef = $.image.current.src;
+    const $ = this.state;
+    if (!$.image || $.image.width < 2 || $.image.height < 2)
+      return this.error();
+    this.render([]);
   }
 
   error () {
-    const { props, state: $, getSrc } = this
-    const { setImg, search } = props
-    const pre = $.isbns![0];
-    const len = $.isbns!.length;
-    const num = pre + ~~((len+1)/2)*(len%2*2-1);
-    if (len > search! || $.srcRef) return;
-    $.isbns!.push( num );
-    return setImg((pre:any) => ({...pre, src: getSrc(num)}));
+    const $ = this.state;
+    const { search=-1 } = this.props;
+    if (!$.image || !$.isbns || $.isbns.length > search)
+      return console.warn("Load Error: cant search Image");
+    const len = $.isbns.length;
+    const pre = typeof $.isbns[0] === "string"
+        ? parseInt($.isbns[0], 10)
+        : $.isbns[0];
+    $.isbn = pre + ~~((len + 1) / 2) * (len % 2 * 2 - 1);
+    $.image.src = $.src = this.src;
+    $.image.alt = $.alt || "";
+    $.isbns.push($.isbn);
   }
 
-  getSrc (num: string|number) {
-    const { props: {size}, state: {host} } = this
-    return `http://${host}/images/P/${num}.09.${size}`
+  setup () {
+    const $ = this.state;
+    const { isbn } = this.props;
+    $.isbn = isbn || $.isbn || this.isbn;
+    $.src = $.src || this.src;
+    $.alt = ''; //@TODO get alt
+    ($.isbns = $.isbns || []).push($.isbn);
   }
 
-  getPath () {
-    const { urltext="" } = this.props
-    const { isbns=[] } = this.state
-    const url = new URL(`${urltext.match('https')? '':'https://' }${urltext}`);
-    const paths = url.pathname.split('/').filter(Boolean);
-    const index = paths.map((v, i) => v==='dp'&&i ).find(Boolean) || 0;
-    const isbn = paths.find((_, i) => i===index+1) || '';
-    const name = index > 0? paths[0] : '';
-    const ref  = paths.find(v=>v.match('ref='))?.split('ref=')[1] || '';
-    isbns?.push( parseInt(isbn, 10) );
-    return {name, isbn, ref};
+  get isbn () {
+    const { src="" } = this.props
+    const paths = src.split('/').filter(Boolean);
+    const index = paths.map((v, i) => v === 'dp' && i ).find(Boolean) || 0;
+    return paths[index + 1];
+  }
+
+  get src () {
+    const $ = this.state;
+    $.size = $.size || this.size;
+    $.host = $.host || this.host;
+    return `http://${$.host}/images/P/${$.isbn}.09.${$.size}`;
+  }
+
+  get size () {
+    switch (this.props.size) {
+        case "xs": return "THUMBZZZ";
+        case "sm": return "TZZZZZZZ";
+        case "md": return "MZZZZZZZ";
+        case "lg": return "LZZZZZZZ";
+    }
+    return "MZZZZZZZ";
+  }
+
+  get host () {
+      return this.props.isssl
+        ? 'images-na.ssl-images-amazon.com'
+        : 'images-jp.amazon.com';
   }
 }

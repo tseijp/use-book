@@ -12,10 +12,14 @@ export type SheetProps = Partial<{
 }>
 
 export function Sheet (props:SheetProps) {
-  const {children, height: h=100, started=false, onOpen=null,onClose=null} = props;
+  const { height: h=100, started=false, ...other } = props;
   const [{ y }, set] = useSpring(() => ({ y: h }));
-  const open = _(() => onOpen && (onOpen(), set({ y: 0})), [onOpen, set]);
-  const close = _(() => onClose && (onClose(), set({y: h})), [h, onClose, set]);
+
+  const open = () => void (props.onOpen?.(), set({y: 0}));
+  const close = () => void (props.onClose?.(), set({y: h}));
+  const fun = useRef((_started=true) => _started? open(): close());
+
+  useEffect(() => fun.current(started), [started]);
 
   const bind = useDrag((state) => {
     const { last, vxvy:[,vy], movement:[mx, my], cancel } = state;
@@ -25,16 +29,14 @@ export function Sheet (props:SheetProps) {
   }, { initial:()=>[0,y.get()], filterTaps:true, bounds: {top:0}, rubberband:true });
 
   const display = y.to(py => (py < h? 'block': 'none'));
-  const fun = useRef((started: boolean) => ( started? open(): close()));
 
-  useEffect(() => { fun.current(started) }, [started]);
-  return <Div $h={h} {...bind()} style={{y, display}}>{children}</Div>;
+  return <Div $h={h} {...bind()} style={{y, display}} {...other}/>;
 }
 const Div = styled(animated.div)<any>`
   left: 2vw;
   width: 96vw;
   height: calc(100vh + 100px);
-  bottom: ${({$h}) => `calc(-100vh + ${$h-100}px)`};
+  bottom: ${({$h}) => `calc(-100vh + ${$h - 100}px)`};
   zIndex: 100;
   position: fixed;
   touchAction: none;

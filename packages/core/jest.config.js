@@ -12,7 +12,7 @@ module.exports = {
     testPathIgnorePatterns: ['<rootDir>/node_modules/'],
     transformIgnorePatterns: ['<rootDir>/node_modules/(?!(xxxx.*?\\.js$))'],
     modulePaths: [],
-    moduleNameMapper: {'src/(.*)$': '<rootDir>/src/$1'},
+    moduleNameMapper: {'src/(.*)$': '<rootDir>/packages/core/src/$1'},
     moduleFileExtensions: ['ts','tsx','js','jsx','json','node'],
     /**
      * coverage config

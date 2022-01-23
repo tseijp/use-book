@@ -1,0 +1,10 @@
+node_modules
+dist
+.DS_Store
+*.log
+coverage
+package-lock.json
+
+index.cjs.js
+index.d.ts
+index.js

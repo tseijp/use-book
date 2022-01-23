@@ -1,3 +1,3 @@
-# Contributing to `use-midi`
+# Contributing to `use-book`
 
 ### [TODO]

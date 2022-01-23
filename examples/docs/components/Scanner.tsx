@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import config from "../../camera.config.json";
-
-const Quagga = require ("quagga");
-
-const drawPath = (path: any, ctx: any, xy: any, color: string) =>
-  Quagga.ImageDebug.drawPath(path, xy, ctx, {color,lineWidth:2})
-const drawRect = (path: any, ctx: any, isMain: boolean) =>
-  drawPath(path, ctx, {x:0,y:1}, isMain? '#0F0': "#00F")
-const clearRect = (dom: any, ctx: any) =>
-  ctx.clearRect(0, 0, ...["width", "height"].map(s => Number(dom.getAttribute(s))))
+import config from "../camera.config.json";
 
 export type ScannerProps = {
   onStarted: Function
@@ -18,6 +9,14 @@ export type ScannerProps = {
 export function Scanner (props: ScannerProps) {
   const [started] = useState(props.onStarted)  // err
   const [detected] = useState(props.onDetected) // err
+
+  if (typeof window === "undefined")
+    return
+
+  const Quagga = require ("quagga");
+  const drawPath = (path: any, ctx: any, xy: any, color: string) => Quagga.ImageDebug.drawPath(path, xy, ctx, {color,lineWidth:2})
+  const drawRect = (path: any, ctx: any, isMain: boolean) => drawPath(path, ctx, {x:0,y:1}, isMain? '#0F0': "#00F")
+  const clearRect = (dom: any, ctx: any) => ctx.clearRect(0, 0, ...["width", "height"].map(s => Number(dom.getAttribute(s))))
 
   useEffect (() => {
     Quagga.init(config, (err:any) => {
@@ -38,5 +37,6 @@ export function Scanner (props: ScannerProps) {
       _.codeResult && drawPath(_.line, ctx, {x:"x",y:"y"}, "#F00");
     });
   }, [detected]);
+
   return <div id="interactive" style={{width:"100%",height:"100%",top:0,bottom:0}}/>;
 }

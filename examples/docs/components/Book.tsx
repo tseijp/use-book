@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import styled from "styled-components";
-import { useBook } from "../../src";
+import { useBook } from "use-book/src";
 
 const Div = styled(animated.div)`
   width: auto;
@@ -20,16 +20,17 @@ const Img = styled.img`
 type BookProps = Partial<{
   onOpen: any
   style: any
-  url: string
   limit: number
+  src: string
 }>
 
-export function Book ({url='', limit=400, style={}, onOpen}:BookProps) {
-  const book = useBook(url);
+export function Book (props: BookProps) {
+  const { limit=400, style={}, onOpen, ...other } = props
+  const { src, alt } = useBook(other);
   const cantOpen = useRef(false);
   const [spring, set] = useSpring(() => ({ scale:1, x:0, y:0 }));
   const bind = useGesture({
-    onHover: e => set({scale:e.hovering?1.1:1}),
+    onHover: e => set({scale: e.hovering? 1.1: 1}),
     onClick: e => { onOpen(); e.stopPropagation() },
     onDrag: state => {
       const { down, vxvy: [vx,], movement: [mx,my], cancel } = state;
@@ -48,7 +49,7 @@ export function Book ({url='', limit=400, style={}, onOpen}:BookProps) {
 
   return (
     <Div style={{...spring, ...style}} {...bind()}>
-      {book.img && <Img alt="" {...book.img}/>}
+      <Img src={src} alt={alt}/>
     </Div>
   );
 }
