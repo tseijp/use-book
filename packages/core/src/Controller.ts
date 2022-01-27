@@ -1,7 +1,7 @@
 export type Fun = (...args: any[]) => void
 
 export type Props = Partial<{
-  src:string
+  src: string
   isbn: string|number
   size: string
   isssl: boolean
@@ -22,11 +22,11 @@ export type State = Partial<{
 export class Controller {
   props: Props = {};
   state: State = {};
-  render: Fun = () => {};
+  update: Fun = () => {};
   isChanged = true;
 
-  apply(render: Fun, props: Props, ref?: any) {
-    this.render = render;
+  apply(update: Fun, props: Props, ref?: any) {
+    this.update = update;
     this.props = props;
     this.state.ref = ref
     return this.state;
@@ -47,7 +47,7 @@ export class Controller {
     const $ = this.state;
     if (!$.image || $.image.width < 2 || $.image.height < 2)
       return this.error();
-    this.render([]);
+    this.update([]);
   }
 
   error () {
@@ -57,8 +57,8 @@ export class Controller {
       return console.warn("Load Error: cant search Image");
     const len = $.isbns.length;
     const pre = typeof $.isbns[0] === "string"
-        ? parseInt($.isbns[0], 10)
-        : $.isbns[0];
+      ? parseInt($.isbns[0], 10)
+      : $.isbns[0];
     $.isbn = pre + ~~((len + 1) / 2) * (len % 2 * 2 - 1);
     $.image.src = $.src = this.src;
     $.image.alt = $.alt || "";
@@ -99,8 +99,8 @@ export class Controller {
   }
 
   get host () {
-      return this.props.isssl
-        ? 'images-na.ssl-images-amazon.com'
-        : 'images-jp.amazon.com';
+    return this.props.isssl
+      ? 'images-na.ssl-images-amazon.com'
+      : 'images-jp.amazon.com';
   }
 }

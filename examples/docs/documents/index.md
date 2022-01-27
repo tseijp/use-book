@@ -1,3 +1,7 @@
+---
+sidebar_position: 0
+---
+
 # Introduction to React UseBook
 
 UseBook is designed as a the foundation for React design systems and component libraries.
@@ -36,10 +40,8 @@ Your site starts at [http://localhost:3000](http://localhost:3000).
 ```js
 import { useBook } from "use-book";
 
-function BookCoveer () {
-  const bind = useBook()
-  return <img {...bind()} />
+function BookCoveer (props) {
+  const state = useBook(props)
+  return <img src={state.src} />
 }
-
-
 ```

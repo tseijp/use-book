@@ -11,20 +11,19 @@ use-book exports several hooks and components that can handle different book:
 ### Usage
 
 ```js
-const bind = useBook(props)
-return <div {...bind()}>
+const state = useBook(props)
+return <img src={state.src}>
 ```
 
 - `props` is an object containing options for the book
 - `state` is an object containing all attributes of the book.
-- `bind` is an function for creating event handling objects.
 
 Components is a shorthand for passing hooks directly to children.
 
 ```js
 return (
   <UseBook {...props}>
-    {bind => <img {...bind()}/>}
+    {state => <img src={state.src} />}
   </UseNote>
 )
 // or

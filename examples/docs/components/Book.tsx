@@ -17,21 +17,21 @@ const Img = styled.img`
   pointer-events: none;
 `
 
-type BookProps = Partial<{
-  onOpen: any
-  style: any
-  limit: number
+type BookProps = {
+  onStart?: any
+  style?: any
+  limit?: number
   src: string
-}>
+}
 
 export function Book (props: BookProps) {
-  const { limit=400, style={}, onOpen, ...other } = props
+  const { limit=400, style={}, onStart, ...other } = props
   const { src, alt } = useBook(other);
   const cantOpen = useRef(false);
-  const [spring, set] = useSpring(() => ({ scale:1, x:0, y:0 }));
+  const [spring, api] = useSpring(() => ({ scale:1, x:0, y:0 }));
   const bind = useGesture({
-    onHover: e => set({scale: e.hovering? 1.1: 1}),
-    onClick: e => { onOpen(); e.stopPropagation() },
+    onHover: e => api.start({scale: e.hovering? 1.1: 1}),
+    onClick: e => { onStart?.(); e.stopPropagation() },
     onDrag: state => {
       const { down, vxvy: [vx,], movement: [mx,my], cancel } = state;
       if ((mx**2 + my**2 > limit**2) && cancel) cancel();
@@ -40,10 +40,10 @@ export function Book (props: BookProps) {
         || down
         || cantOpen.current;
       const scale = (notOpen && Math.floor(my) < limit/2)? 1.2: 0.8;
-      set({ x: down? mx: 0, y: down? my: 0, scale });
+      api.start({ x: down? mx: 0, y: down? my: 0, scale });
       if (notOpen) return null;
       cantOpen.current = true;
-      onOpen();
+      onStart?.();
     },
   })
 
