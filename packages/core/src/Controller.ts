@@ -28,7 +28,7 @@ export class Controller {
   apply(update: Fun, props: Props, ref?: any) {
     this.update = update;
     this.props = props;
-    this.state.ref = ref
+    this.state.ref = ref;
     return this.state;
   }
 
@@ -39,7 +39,7 @@ export class Controller {
     this.setup();
     $.image = $.image || new Image();
     $.image.onload = this.load.bind(this);
-    $.image.src = $.src!;
+    $.image.src = $.src || "";
     $.image.alt = $.alt || "";
   }
 
@@ -90,17 +90,24 @@ export class Controller {
 
   get size () {
     switch (this.props.size) {
-        case "xs": return "THUMBZZZ";
-        case "sm": return "TZZZZZZZ";
-        case "md": return "MZZZZZZZ";
-        case "lg": return "LZZZZZZZ";
+      case "xs": return "THUMBZZZ";
+      case "sm": return "TZZZZZZZ";
+      case "md": return "MZZZZZZZ";
+      case "lg": return "LZZZZZZZ";
     }
     return "MZZZZZZZ";
   }
 
   get host () {
-    return this.props.isssl
+    return this.isssl
       ? 'images-na.ssl-images-amazon.com'
       : 'images-jp.amazon.com';
+  }
+
+  get isssl () {
+    if (typeof this.props.isssl !== "undefined")
+      return this.props.isssl
+    return typeof window !== "undefined"
+      && window.location.hostname !== "localhost"
   }
 }

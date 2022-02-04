@@ -30,9 +30,9 @@ type ButtonProps = {
 export function Button (props:ButtonProps) {
   const { height, limit, opened, started, onStart, onFinish } = props;
   const [{ scale,x,y }, api] = useSpring(() => ({ scale:1, x:0, y:0 }));
-  const open  = _(() => api.start({scale:1.2,x:-25,y:-25 }), [api]);
-  const start = _(() => api.start({scale:1  ,x:0  ,y:+100}), [api]);
-  const close = _(() => api.start({scale:1  ,x:0  ,y:0   }), [api]);
+  const open  = _(() => api.start({scale:1.2, x:-25, y:-25 }), [api]);
+  const start = _(() => api.start({scale:1  , x:0  , y:+100}), [api]);
+  const close = _(() => api.start({scale:1  , x:0  , y:0   }), [api]);
   const onClick = () => opened && started? (onFinish?.(), close()): (onStart?.(), open());
   const bind = useGesture({onClick, onDrag: (state) => {
       const {down, movement: [mx,my], cancel} = state;

@@ -42,6 +42,7 @@ const config = {
       navbar: { title: 'use-book', logo: { alt: ' ', src: 'img/favicon.png'}, items: [
         { type: 'doc', docId: 'index', position: 'left', label: 'Documents', docsPluginId: 'documents'},
         { type: 'doc', docId: 'index', position: 'left', label: 'Examples', docsPluginId: 'examples'},
+        { to: '/help', label: 'Help', position: 'left', },
         { href: 'https://github.com/tseijp/use-book', label: 'GitHub', position: 'right' },
       ]},
       footer: { style: 'dark', links: [

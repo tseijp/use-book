@@ -1,16 +1,25 @@
 # Available book apis
-import { useState } from "react"
 import { useBook, UseBook } from "use-book/src"
 
-<UseBook size="xs" isbn="4041013380">
+```jsx
+import { useBook, UseBook } from "use-book/src"
+render (
+  <UseBook size="xs" as="img" isbn="4041013380" />
+  <UseBook size="sm" as="img" isbn="4041013380" isssl />
+  <UseBook size="md" as="img" isbn="4041013381" search={10} />
+  <UseBook size="lg" isbn="4041013380">
+    {({src, alt}) =>
+      <img src={src} alt={alt}/>
+    }
+  </UseBook>
+)
+```
+
+<UseBook size="xs" as="img" isbn="4041013380" />
+<UseBook size="sm" as="img" isbn="4041013380" isssl />
+<UseBook size="md" as="img" isbn="4041013381" search={10} />
+<UseBook size="lg" isbn="4041013380">
   {({src, alt}) =>
-    <img src={src}/>
+    <img src={src} alt={alt}/>
   }
 </UseBook>
-
-
-<UseBook size="sm" as="img" isbn="4041013380" />
-
-<UseBook size="md" as="img" isbn="4041013380" />
-
-<UseBook size="lg" as="img" isbn="4041013381" search={10}/>
