@@ -41,7 +41,7 @@ export function Scanner (props: ScannerProps) {
   const started = useRef<Fun>(props.onStarted)  // err
   const detected = useRef<Fun>(props.onDetected) // err
 
-  if (typeof window === "undefined") return 
+  if (typeof window === "undefined") return
 
   useEffect (() => {
     setTimeout(() => {
