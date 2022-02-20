@@ -2,8 +2,9 @@ import React, { useEffect, useCallback as _, useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useDrag } from "react-use-gesture";
 import styled from "styled-components";
+import { Fun } from "use-book/src"
 
-const Div = styled(animated.div)<any>`
+const Div = styled(animated.div)<{}>`
   left: 2vw;
   width: 96vw;
   height: calc(100vh + 100px);
@@ -15,14 +16,12 @@ const Div = styled(animated.div)<any>`
   background-color: rgba(0,0,0,0);
 `
 
-type Fun = (...args: any) => void
-
 export type SheetProps = Partial<{
   height: number
   onStart: Fun
   onFinish: Fun
   started: boolean
-  children:any
+  children: React.ReactNode
 }>
 
 export function Sheet (props:SheetProps) {

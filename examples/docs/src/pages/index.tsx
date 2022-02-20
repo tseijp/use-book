@@ -6,12 +6,12 @@ import Translate from '@docusaurus/Translate';
 import { Book } from '@site/components/Book'
 import { Slider } from '@site/components/Slider'
 import useThemeContext from '@theme/hooks/useThemeContext';
+import type { LinkProps } from '@docusaurus/Link';
+import type { DocusaurusConfig } from '@docusaurus/types';
 import GitHubButton from 'react-github-btn';
 import styled, { css } from 'styled-components';
 
-export function withDarkAttrs <Props> (props: Props): Props
-
-export function withDarkAttrs (props: any) {
+export function withDarkAttrs <Props> (props: Props): Props {
     const { isDarkTheme } = useThemeContext()
     return {isDarkTheme, ...props}
 }
@@ -89,7 +89,7 @@ const GitHubStarButton = () => (
   </GitHubButton>
 );
 
-function useButtonAttrs (props: any) {
+function useButtonAttrs<Props>(props: LinkProps): Props {
   const { href, target, children, ...other } = props;
   return { to: href, target, children, ...other}
 }
@@ -105,7 +105,7 @@ const Button = styled(Link).attrs(useButtonAttrs)`
   color: white;
 `
 
-const SocialFlex = styled(Flex)`
+const SocialFlex = styled(Flex)<FlexProps>`
   z-index: 1;
   position: absolute;
   padding: 10px 0;
@@ -121,7 +121,7 @@ const SocialFlex = styled(Flex)`
   `}
 `
 
-const ButtonFlex = styled(Flex)`
+const ButtonFlex = styled(Flex)<FlexProps>`
   z-index: 1;
   bottom: 0;
   position: absolute;
@@ -171,8 +171,6 @@ const Interactive = () => (
 /**
  * Main Contents
  */
-
-
 const Main = styled(Flex)``
 
 const Container = styled(Flex)<FlexProps & {$gray?: boolean}>`
@@ -198,7 +196,7 @@ const Content = styled(Flex)`
   }
 `
 
-const Responsible = styled.div<any>`
+const Responsible = styled.div<{width?: number}>`
   ${({width=700}) => css`
     width: ${width}px;
     @media screen and (max-width: ${width}px) {
@@ -211,7 +209,7 @@ const Responsible = styled.div<any>`
 /**
  * App
  */
-export default function App (props: any) {
+export default function App (props: {config: DocusaurusConfig}) {
   const {config: siteConfig} = props;
   return (
     <Layout>

@@ -2,6 +2,7 @@ import React, { useEffect, useCallback as _ } from "react";
 import { useSpring, animated, } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import styled from "styled-components";
+import { Fun } from 'use-book/src'
 
 const Div = styled(animated.div)`
   font-size: 2em;
@@ -16,8 +17,6 @@ const Div = styled(animated.div)`
   align-items: center;
   justify-content: center;
 `
-type Fun = (...args: any) => void
-
 type ButtonProps = {
   height:number,
   limit :number,

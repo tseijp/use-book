@@ -11,4 +11,4 @@
 | alt: string     |  |
 | host: string    | amazon host url |
 | size: string    | image size shorthands: xs, sm, md, lg |
-| ref: any        | React Forwarded Ref Object |
+| ref: Any        | React Forwarded Ref Object |

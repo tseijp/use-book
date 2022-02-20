@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useSpring, animated } from "react-spring";
 import { useGesture } from "react-use-gesture";
 import styled from "styled-components";
-import { useBook } from "use-book/src";
+import { useBook, Any, Fun } from "use-book/src";
 
 const Div = styled(animated.div)`
   width: auto;
@@ -18,8 +18,8 @@ const Img = styled.img`
 `
 
 type BookProps = {
-  onStart?: any
-  style?: any
+  onStart?: Fun
+  style?: Any
   limit?: number
   src: string
 }

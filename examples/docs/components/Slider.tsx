@@ -3,8 +3,9 @@ import React, { useRef, useCallback as _ } from "react";
 import { useGesture } from "react-use-gesture";
 import { useSprings, animated } from "react-spring";
 import styled from "styled-components";
+import { Any } from 'use-book/src'
 
-const Wrap = styled.div<any>`
+const Wrap = styled.div<{$top: boolean}>`
   left: 0;
   bottom: 0;
   width: 100vw;
@@ -25,7 +26,7 @@ const Item = styled(animated.div)`
 
 export type SliderProps = Partial<{
   $top: boolean
-  style: any
+  style: Any
   width: number
   visible: number
   children: React.ReactNode[]
