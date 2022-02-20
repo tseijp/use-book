@@ -15,14 +15,15 @@
         "examples/*"
     ],
     "scripts": {
-        "bootstrap": "yarn lerna bootstrap",
-        "clean": "yarn lerna clean -y",
-        "init": "npm i -g yarn lerna && yarn bootstrap",
-        "start": "cd examples/docs && yarn start",
-        "build": "cd examples/docs && yarn build",
-        "deploy": "cd examples/docs && yarn deploy",
-        "rollup": "cd packages/core && yarn  rollup -c",
-        "npm": "cd packages/core && yarn publish",
+        "bootstrap": "npx lerna bootstrap",
+        "clean": "npx lerna clean -y",
+        "init": "npm i -g lerna && npm run bootstrap",
+        "start": "cd examples/docs && npm start",
+        "build": "cd examples/docs && npm run build",
+        "serve": "cd examples/docs && npm run serve",
+        "deploy": "cd examples/docs && npm run deploy",
+        "rollup": "cd packages/core && npx rollup -c",
+        "npm": "cd packages/core && npm run publish",
         "cov": "cd packages/core && jest --coverage",
         "watch": "cd packages/core && jest --watch --runInBand",
         "ls": "cd packages/core && npm pack --dry-run"

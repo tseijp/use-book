@@ -30,8 +30,8 @@ export function Book (props: BookProps) {
   const cantOpen = useRef(false);
   const [spring, api] = useSpring(() => ({ scale:1, x:0, y:0 }));
   const bind = useGesture({
+    onClick: (e: any) => { onStart?.(); e.stopPropagation() },
     onHover: e => api.start({scale: e.hovering? 1.1: 1}),
-    onClick: e => { onStart?.(); e.stopPropagation() },
     onDrag: state => {
       const { down, vxvy: [vx,], movement: [mx,my], cancel } = state;
       if ((mx**2 + my**2 > limit**2) && cancel) cancel();

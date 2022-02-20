@@ -4,35 +4,16 @@ import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import Translate from '@docusaurus/Translate';
 import { Book } from '@site/components/Book'
-import { Slider } from '@site/components/Slider'
+import { Flex } from '@site/components/Flex';
+import { Content } from '@site/components/Content';
+import { Container } from '@site/components/Container';
 import useThemeContext from '@theme/hooks/useThemeContext';
 import type { LinkProps } from '@docusaurus/Link';
 import type { DocusaurusConfig } from '@docusaurus/types';
 import GitHubButton from 'react-github-btn';
 import styled, { css } from 'styled-components';
 
-export function withDarkAttrs <Props> (props: Props): Props {
-    const { isDarkTheme } = useThemeContext()
-    return {isDarkTheme, ...props}
-}
-
 const items = [4041013380,4041002877,4041315220,4041067944,4041366054,4041245257];  //角川 true
-
-type FlexProps = {
-  $row?: boolean
-  $wrap?: boolean
-  isDarkTheme: boolean
-}
-
-const Flex = styled.div.attrs(withDarkAttrs)<FlexProps>`
-  display: flex;
-  width: 100%;
-  margin: auto;
-  align-items: center;
-  justify-content: center;
-  ${({$row}) => !$row && `flex-direction: column;`}
-  ${({$wrap}) => $wrap && `flex-wrap: wrap;`}
-`
 
 /**
  * Interactive
@@ -160,7 +141,7 @@ const Interactive = () => (
       <Button href="/documents/api/props">
         <Translate>Props</Translate>
       </Button>
-      <Button href="/documents/api/help">
+      <Button href="/help">
         <Translate>Get help</Translate>
       </Button>
     </ButtonFlex>
@@ -171,31 +152,6 @@ const Interactive = () => (
 /**
  * Main Contents
  */
-const Main = styled(Flex)``
-
-const Container = styled(Flex)<FlexProps & {$gray?: boolean}>`
-  width: 100%
-  margin: 0px;
-  text-align: center;
-  padding: auto 1rem;
-  ${({ isDarkTheme, $gray }) => $gray && css`
-    background: ${isDarkTheme? "#212121": "#efefef"};
-  `}
-`
-
-const Content = styled(Flex)`
-  max-width: 1100px;
-  font-size: 1.7rem;
-  text-align: left;
-  min-height: 20rem;
-  padding: 2rem; 1rem;
-  > h3 {
-    font-size: 2.5rem;
-    border-left: solid 0.5rem;
-    padding-left: 0.5rem;
-  }
-`
-
 const Responsible = styled.div<{width?: number}>`
   ${({width=700}) => css`
     width: ${width}px;
@@ -218,7 +174,7 @@ export default function App (props: {config: DocusaurusConfig}) {
           {siteConfig.title} {siteConfig.titleDelimiter} {siteConfig.tagline}
         </title>
       </Head>
-      <Main>
+      <Flex>
         <Interactive />
         <Container $row $gray>
           <Content style={{fontSize: "2.5rem"}}>
@@ -264,7 +220,7 @@ export default function App (props: {config: DocusaurusConfig}) {
             </Translate>
           </Content>
         </Container>
-      </Main>
+      </Flex>
     </Layout>
   );
 }
