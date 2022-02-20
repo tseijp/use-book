@@ -1,4 +1,7 @@
-export type Fun = (...args: any[]) => void
+// @ts-ignore
+export class Any { private unused: never }
+
+export type Fun<I extends ReadonlyArray<unknown>=any[], O=any> = (...i: I) => O
 
 export type Props = Partial<{
   src: string
@@ -15,7 +18,7 @@ export type State = Partial<{
   alt: string
   host: string
   size: string
-  ref: any
+  ref: unknown
   image: HTMLImageElement
 }>
 
@@ -25,7 +28,7 @@ export class Controller {
   update: Fun = () => {};
   isChanged = true;
 
-  apply(update: Fun, props: Props, ref?: any) {
+  apply(update: Fun, props: Props, ref?: unknown) {
     this.update = update;
     this.props = props;
     this.state.ref = ref;
