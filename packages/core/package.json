@@ -1,11 +1,16 @@
 {
+    "bugs": "https://github.com/tseijp/use-book/issues/",
+    "homepage": "https://tseijp.github.io/use-book/",
+    "repository": "https://github.com/tseijp/use-book/",
+    "description": "📚a hook that lets you get product info from url or book cover in React",
+    "keywords": [
+        "react-component",
+        "react-hook",
+        "react"
+    ],
     "name": "use-book",
     "author": "tsei",
     "license": "MIT",
-    "homepage": "https://tseijp.github.io/use-book/",
-    "description": "📚a hook that lets you get product info from url or book cover in React",
-    "sideEffect": false,
-    "private": false,
     "version": "2.0.0",
     "module": "index.js",
     "types": "index.d.ts",
@@ -16,21 +21,11 @@
         "index.d.ts",
         "index.cjs.js"
     ],
+    "private": false,
+    "sideEffect": false,
     "publishConfig": {
         "access": "public"
     },
-    "bugs": {
-        "url": "https://github.com/tseijp/use-book/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/tseijp/use-book.git"
-    },
-    "keywords": [
-        "react-component",
-        "react-hook",
-        "react"
-    ],
     "dependencies": {},
     "peerDependencies": {
         "react": ">=16.8"

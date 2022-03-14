@@ -1,12 +1,18 @@
 {
+    "bugs": "https://github.com/tseijp/use-book/issues/",
+    "homepage": "https://tseijp.github.io/use-book/",
+    "repository": "https://github.com/tseijp/use-book/",
+    "description": "📚a hook that lets you get product info from url or book cover in React",
+    "keywords": [
+        "react-component",
+        "react-hook",
+        "react"
+    ],
     "name": "@use-book/root",
     "version": "1.0.0",
     "author": "tsei",
     "license": "MIT",
     "private": true,
-    "description": "📚a hook that lets you get product info from url or book cover in React",
-    "repository": "tseijp/use-book",
-    "homepage": "https://github.com/tseijp/use-book#readme",
     "maintainers": [
         "tseijp (https://github.com/tseijp)"
     ],
