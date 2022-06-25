@@ -1,5 +1,4 @@
-
-# use-book
+# 📚use-book
 
 📚 __use-book__ is a hook that lets you get product info from url or book cover in React.
 
@@ -18,7 +17,8 @@
 </p>
 
 
-### Table of Contents
+## Table of Contents
+
 * [Install via npm](#install-via-npm)
 * [Quick started](#quick-started)
 * [Simple example](#simple-example)
@@ -26,12 +26,14 @@
 * [~~Fantastic recipes~~](#fantastic-recipes)
 * [Performance pitfalls](#performance-pitfalls)
 
-### Install via npm
+## Install via npm
+
 ```bash
 npm i use-book
 ```
 
-### Quick started
+## Quick started
+
 ```bash
 git clone github.com/tseijp/use-book
 cd use-book
@@ -42,7 +44,7 @@ npm start
 * open browser and visit [localhost:3000](http://localhost:3000/)
 * Now you can go to our [demo](https://tsei.jp/hook/use-book), and try its usage.
 
-### Simple example
+## Simple example
 
 ```js
 import React from 'react'
@@ -54,14 +56,14 @@ export function App() {
 }
 ```
 
-### Available hooks
+## Available hooks
 
 | Hook       | Description                                |
 | ---------- | ------------------------------------------ |
 | `useBook`  | get amazon data from url                   |
 
 
-### Performance pitfalls
+## Performance pitfalls
 
 __URL__
 
