@@ -23,7 +23,6 @@
 * [Quick started](#quick-started)
 * [Simple example](#simple-example)
 * [Available hooks](#available-hooks)
-* [~~Fantastic recipes~~](#fantastic-recipes)
 * [Performance pitfalls](#performance-pitfalls)
 
 ### Install via npm
